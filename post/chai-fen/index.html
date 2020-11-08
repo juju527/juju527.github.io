@@ -9,7 +9,7 @@
 <meta name="description" content="因为失去，所以明白">
 <meta name="theme-color" content="#000">
 <title>差分 | juju527&#39;s blog</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1604653092878">
+<link rel="shortcut icon" href="/favicon.ico?v=1604805114452">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -2033,6 +2033,30 @@ int main(){
 修了一下blog，发现之前改了github密码，半天没想起来&lt;br&gt;
 blog主页的个人介绍改不了了，&lt;s&gt;所以我强制初二？&lt;/s&gt;&lt;br&gt;
 更了更早就写完的动态dp，背了下对拍代码和vim配置&lt;/p&gt;
+&lt;h3 id=&#34;day-1-2&#34;&gt;Day 1&lt;/h3&gt;
+&lt;p&gt;考场感觉还行，1.5h才模拟完T1，&lt;s&gt;只想说T1出题人没事了&lt;/s&gt;&lt;br&gt;
+20min切掉了t2，&lt;s&gt;只想说T1出题人没事了&lt;/s&gt;&lt;br&gt;
+t3上来没去想正解，把所有暴力分都拿了（除树那一档），共50pts&lt;br&gt;
+然后码完感觉自己有点太保守了，大概有一点正解思路&lt;br&gt;
+这时候大概只剩30min，t3暴力写了140行&lt;br&gt;
+而且没得样例检查，考完出来觉得这时候其实应该多静态调下t3的&lt;br&gt;
+看到t4这种题我一向想法不多，模拟了一下n=3，写了个n=10的爆搜就走人了，拿了40pts&lt;br&gt;
+考完刚出来的遗憾是打得太保守了，没有把t3切掉&lt;br&gt;
+t4这种题我清楚知道自己并不擅长，没有过多纠缠，要多加强类似题目的训练&lt;/p&gt;
+&lt;p&gt;当晚去看了场电影&lt;br&gt;
+10:30 P.M.回家后测了下民间数据心态就炸了&lt;br&gt;
+T1挂成40pts，T2挂成60pts，T3爆0，唯一庆幸的是T4没挂分&lt;br&gt;
+手机还落在电影院了，真是可悲的一天呢（苦笑&lt;/p&gt;
+&lt;h3 id=&#34;day2&#34;&gt;Day2&lt;/h3&gt;
+&lt;p&gt;上午去学校体检完，回来调了下代码&lt;br&gt;
+T1是从公元前1年到公元1582年10月4日的时间算错了&lt;br&gt;
+当时395*1412就好像直接认为到1581年12月31日了，把这个时间算对替换了个数字就能过所有民间数据了&lt;br&gt;
+这个消失的10天很特殊，考场上没自己手造几组数据huck一下自己，有点亏&lt;br&gt;
+T2lluyyds，明明特别注意所有地方都要写成1llu&amp;lt;&amp;lt;d，还是有两处忘记加llu，没有考虑k=64，n=0的小case&lt;br&gt;
+T3非常离谱，总共写了三档subtask，每档都有个小细节错了，直接爆0&lt;br&gt;
+T4没什么好说的，回去路上数学大佬zyx说了下他的想法，发现我没有考虑到吃蛇的状态很少这一点&lt;br&gt;
+日后再详细补这题吧&lt;/p&gt;
+&lt;p&gt;大概第一次体会到如此大型挂分的痛楚&lt;/p&gt;
 ">CSP2020游记</a>
       </div>
       
@@ -2403,11 +2427,13 @@ int main(){
 而我们对于&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;u&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;u&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;考虑了它所有能到达（影响）的点，不存在我们没考虑到的情况&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;优缺点分析&#34;&gt;优缺点分析&lt;/h3&gt;
-&lt;h2 id=&#34;相比强连通分量的做法该做法的构造难度较小做法直接枚举01当然难度小复杂度也是线性&#34;&gt;相比强连通分量的做法，该做法的构造难度较小&lt;br&gt;
+&lt;p&gt;相比强连通分量的做法，该做法的构造难度较小&lt;br&gt;
 &lt;s&gt;做法直接枚举&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;/&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;0/1&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;当然难度小&lt;/s&gt;&lt;br&gt;
-复杂度也是线性&lt;/h2&gt;
-&lt;h2 id=&#34;说实话前面讲了一大堆奇奇怪怪的东西也许都还有问题欢迎来卡&#34;&gt;说实话前面讲了一大堆奇奇怪怪的东西也许都还有问题&lt;br&gt;
-欢迎来卡&lt;/h2&gt;
+复杂度也是线性&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;说实话前面讲了一大堆奇奇怪怪的东西也许都还有问题&lt;br&gt;
+欢迎来卡&lt;/p&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;代码&#34;&gt;代码&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;#include&amp;lt;bits/stdc++.h&amp;gt;
 using namespace std;

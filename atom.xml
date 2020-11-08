@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://juju527.github.io</id>
     <title>juju527&apos;s blog</title>
-    <updated>2020-11-06T08:59:09.366Z</updated>
+    <updated>2020-11-08T03:12:06.593Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://juju527.github.io"/>
     <link rel="self" href="https://juju527.github.io/atom.xml"/>
@@ -238,6 +238,30 @@ int main(){
 修了一下blog，发现之前改了github密码，半天没想起来<br>
 blog主页的个人介绍改不了了，<s>所以我强制初二？</s><br>
 更了更早就写完的动态dp，背了下对拍代码和vim配置</p>
+<h3 id="day-1-2">Day 1</h3>
+<p>考场感觉还行，1.5h才模拟完T1，<s>只想说T1出题人没事了</s><br>
+20min切掉了t2，<s>只想说T1出题人没事了</s><br>
+t3上来没去想正解，把所有暴力分都拿了（除树那一档），共50pts<br>
+然后码完感觉自己有点太保守了，大概有一点正解思路<br>
+这时候大概只剩30min，t3暴力写了140行<br>
+而且没得样例检查，考完出来觉得这时候其实应该多静态调下t3的<br>
+看到t4这种题我一向想法不多，模拟了一下n=3，写了个n=10的爆搜就走人了，拿了40pts<br>
+考完刚出来的遗憾是打得太保守了，没有把t3切掉<br>
+t4这种题我清楚知道自己并不擅长，没有过多纠缠，要多加强类似题目的训练</p>
+<p>当晚去看了场电影<br>
+10:30 P.M.回家后测了下民间数据心态就炸了<br>
+T1挂成40pts，T2挂成60pts，T3爆0，唯一庆幸的是T4没挂分<br>
+手机还落在电影院了，真是可悲的一天呢（苦笑</p>
+<h3 id="day2">Day2</h3>
+<p>上午去学校体检完，回来调了下代码<br>
+T1是从公元前1年到公元1582年10月4日的时间算错了<br>
+当时395*1412就好像直接认为到1581年12月31日了，把这个时间算对替换了个数字就能过所有民间数据了<br>
+这个消失的10天很特殊，考场上没自己手造几组数据huck一下自己，有点亏<br>
+T2lluyyds，明明特别注意所有地方都要写成1llu&lt;&lt;d，还是有两处忘记加llu，没有考虑k=64，n=0的小case<br>
+T3非常离谱，总共写了三档subtask，每档都有个小细节错了，直接爆0<br>
+T4没什么好说的，回去路上数学大佬zyx说了下他的想法，发现我没有考虑到吃蛇的状态很少这一点<br>
+日后再详细补这题吧</p>
+<p>大概第一次体会到如此大型挂分的痛楚</p>
 ]]></content>
     </entry>
     <entry>
@@ -455,11 +479,13 @@ int main(){
 而我们对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>考虑了它所有能到达（影响）的点，不存在我们没考虑到的情况</p>
 </blockquote>
 <h3 id="优缺点分析">优缺点分析</h3>
-<h2 id="相比强连通分量的做法该做法的构造难度较小做法直接枚举01当然难度小复杂度也是线性">相比强连通分量的做法，该做法的构造难度较小<br>
+<p>相比强连通分量的做法，该做法的构造难度较小<br>
 <s>做法直接枚举<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mi mathvariant="normal">/</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">0/1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mord">/</span><span class="mord">1</span></span></span></span>当然难度小</s><br>
-复杂度也是线性</h2>
-<h2 id="说实话前面讲了一大堆奇奇怪怪的东西也许都还有问题欢迎来卡">说实话前面讲了一大堆奇奇怪怪的东西也许都还有问题<br>
-欢迎来卡</h2>
+复杂度也是线性</p>
+<hr>
+<p>说实话前面讲了一大堆奇奇怪怪的东西也许都还有问题<br>
+欢迎来卡</p>
+<hr>
 <h3 id="代码">代码</h3>
 <pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
