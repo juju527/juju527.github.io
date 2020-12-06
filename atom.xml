@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://juju527.github.io</id>
     <title>juju527&apos;s blog</title>
-    <updated>2020-12-04T13:35:05.037Z</updated>
+    <updated>2020-12-06T15:06:29.126Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://juju527.github.io"/>
     <link rel="self" href="https://juju527.github.io/atom.xml"/>
@@ -16,12 +16,42 @@
         <link href="https://juju527.github.io/post/noip2020-you-ji/">
         </link>
         <updated>2020-12-04T11:37:17.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="day-1">Day-1</h3>
+        <content type="html"><![CDATA[<h3 id="day-1">Day -1</h3>
 <p>上午复习了点板子，下午yali组织了动员大会<br>
 队爷讲的好！（bushi<br>
 由于一个月前的CSP2020还挂得蛮惨的，希望自己能更注重细节一点<br>
 晚上复习了下字符串，把两篇早就写完的文章传到blog上了<br>
 <s>给自己多开开坑总是不坏的</s></p>
+<h3 id="day-1-2">Day 1</h3>
+<p>路上遇到了车牌 湘A RP666，暗示我rp高（<br>
+进考场之后在外面等了20min，面基了ka老师<br>
+<s>ka老师很圆润（bushi</s><br>
+进去后原本我的位置没电脑，大雾，坐到A排去了<br>
+发题后秒切了T1,T2<br>
+T3看两眼没啥想法，T4可能会点<br>
+然后先打T1,T2去了，大概10:00左右把T1,T2做完，并遗憾的发现我的T2被卡常了<br>
+然后卡了半个小时T2的常数，原本写的3哈希都改成了单哈希（药丸<br>
+从18s卡到了5s<br>
+10:30的时候去看T4，想了一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mo>∏</mo><msub><mi>w</mi><mi>i</mi></msub><mo>∗</mo><mi>k</mi><mo>∗</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(\prod w_i*k*logn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00001em;vertical-align:-0.25001em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 的辣鸡做法<br>
+觉得能过40pts<br>
+11:00的时候调完了T4暴力并成功忘记判-1<br>
+还剩两小时的我看了10min T3，曾试图构造某种方案但发现第一档分都不会写<br>
+然后就继续卡T2的常数，最终卡到了3s<br>
+发现大概写个扩展kmp就不要哈希了，并<s>亲切问候了出题人（</s><br>
+最后想了好久才憋出来z函数，但似乎6s都跑不出来，我就放弃了，改回了hash<br>
+考场认为自己是 100+84+0+40=224<br>
+实际大概 90?+100?+0+30?=220?<br>
+由于10天后就是第三次月考，暂时主攻文化<br>
+本人还不清楚为啥T1要高精，也不清楚为啥我的T4过不了第四档分<br>
+大概等有空了再填坑吧</p>
+<h3 id="day-2">Day 2</h3>
+<p>被古诗背到吐血<br>
+不懂为什么T2写z函数后反而洛谷数据会T，哈希却过了<br>
+初中最后的联赛结束了，也成功地认识到了自己的一些问题<br>
+本场考试虽然分数并不可观，但我唯一的遗憾大概只有T3的30pts~40pts一分都没吃到<br>
+但同校的同学分数大概均集中在200~260之间，感觉今年的WC我可能希望不大<br>
+默默orz吊打我的hzr,xzy</p>
+<p>就这样，希望我第三次月考顺利</p>
 ]]></content>
     </entry>
     <entry>
