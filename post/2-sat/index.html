@@ -9,7 +9,7 @@
 <meta name="description" content="因为失去，所以明白">
 <meta name="theme-color" content="#000">
 <title>2-SAT | juju527&#39;s blog</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1608823266099">
+<link rel="shortcut icon" href="/favicon.ico?v=1612188391544">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -198,19 +198,19 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">21</span>
+        <span class="site-item-stat-count">22</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="">
-        <span class="site-item-stat-count">28</span>
+        <span class="site-item-stat-count">29</span>
         <span class="site-item-stat-name language" data-lan="category">分类</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="/tags/">
-        <span class="site-item-stat-count">28</span>
+        <span class="site-item-stat-count">29</span>
         <span class="site-item-stat-name language" data-lan="tag">标签</span>
       </a>
     </div>
@@ -1535,6 +1535,54 @@ int main(){
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://juju527.github.io/post/xu-shu/"" data-c="
+          &lt;h2 id=&#34;虚树&#34;&gt;虚树&lt;/h2&gt;
+&lt;p&gt;将树上某些关键点拿出来，保持一定祖先关系形成的树&lt;/p&gt;
+&lt;h3 id=&#34;性质&#34;&gt;性质&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;k个关键点构成的虚树大小上线为2k-1，在 虚树形态为一颗完全二叉树时实现&lt;/li&gt;
+&lt;li&gt;虚树上节点集合为按dfs序排序后相邻节点的lca所构成的集合与关键点集合的并集&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;构建&#34;&gt;构建&lt;/h3&gt;
+&lt;p&gt;不妨设dfs序先左后右&lt;br&gt;
+考虑按dfs序排序后增量构建与&lt;strong&gt;虚树的最右链&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;最右链&lt;/strong&gt;：当前加入的最后一个点到虚树根的一条链（当前虚树最右端的链）&lt;br&gt;
+具体实现用栈来&lt;br&gt;
+当加入一个新点时，与最右链上的点进行比对，加入虚树&lt;br&gt;
+讨论加入新点x的情况，设y=lca(x,st[top])&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;点x在st[top]的子树里&lt;br&gt;
+在最右链中加入x即可&lt;/li&gt;
+&lt;li&gt;点x不在st[top]的子树里且在st[top-1]的子树里且y不为st[top-1]&lt;br&gt;
+此时y在st[top]到st[top-1]的路径上&lt;br&gt;
+更新最右链（st[top-1]-&amp;gt;st[top]变为st[top-1]-&amp;gt;y-&amp;gt;x），并将(st[top-1],st[top])加入虚树边集&lt;/li&gt;
+&lt;li&gt;点x不在st[top]的子树里且在st[top-1]的子树里且y为st[top-1]&lt;br&gt;
+更新最右链（st[top-1]-&amp;gt;st[top]变为st[top-1]-&amp;gt;x），并将(st[top-1],st[top])加入虚树边集&lt;/li&gt;
+&lt;li&gt;点x不在st[top-1]的路径里&lt;br&gt;
+根据y所在位置退栈更新最右链直至变为Case1/2/3&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;代码实现&#34;&gt;代码实现&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;int tp=0,len=0;
+int st[maxn],b[maxn];
+void ins(int x){
+	if(tp==0){st[++tp]=x;b[++len]=x;return ;}
+	int p=lca(st[tp],x);
+	while(dep[st[tp-1]]&amp;gt;dep[p]){
+		add(st[tp-1],st[tp]);
+		tp--;
+	}
+	if(st[tp]!=p){
+		if(st[tp-1]==p){add(st[tp-1],st[tp],0);tp--;}
+		else{add(p,st[tp]);b[++len]=p;st[tp]=p;}
+	}
+	st[++tp]=x;b[++len]=x;
+	return ;
+}
+&lt;/code&gt;&lt;/pre&gt;
+">虚树</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://juju527.github.io/post/noip2020-you-ji/"" data-c="

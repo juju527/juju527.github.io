@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="因为失去，所以明白">
 <meta name="theme-color" content="#000">
-<title>主席树 | juju527&#39;s blog</title>
+<title>虚树 | juju527&#39;s blog</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1612188391544">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="主席树" />
-  <meta name="keywords" content="主席树,学习笔记" />
+  <meta name="description" content="虚树" />
+  <meta name="keywords" content="虚树,学习笔记" />
 </head>
 
 <body>
@@ -238,13 +238,12 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E4%B8%BB%E5%B8%AD%E6%A0%91%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E7%BA%BF%E6%AE%B5%E6%A0%91">主席树(可持久化线段树)</a>
+<li><a href="#%E8%99%9A%E6%A0%91">虚树</a>
 <ul>
-<li><a href="#%E6%A8%A1%E6%9D%BF%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E7%BA%BF%E6%AE%B5%E6%A0%91-1%E4%B8%BB%E5%B8%AD%E6%A0%91">【模板】可持久化线段树 1（主席树）</a></li>
-<li><a href="#%E6%A8%A1%E6%9D%BF%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E6%95%B0%E7%BB%84%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%B9%B3%E8%A1%A1%E6%A0%91">【模板】可持久化数组（可持久化线段树/平衡树）</a>
+<li><a href="#%E6%80%A7%E8%B4%A8">性质</a></li>
+<li><a href="#%E6%9E%84%E5%BB%BA">构建</a>
 <ul>
-<li><a href="#jsoi2018%E5%88%97%E9%98%9F">[JSOI2018]列队</a></li>
-<li><a href="#fjoi2016%E7%A5%9E%E7%A7%98%E6%95%B0">[FJOI2016]神秘数</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">代码实现</a></li>
 </ul>
 </li>
 </ul>
@@ -516,8 +515,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://juju527.github.io/post/zhu-xi-shu/">
-      主席树
+    <a class="post-title-link" href="https://juju527.github.io/post/xu-shu/">
+      虚树
     </a>
   </h1>
   <div class="post-meta">
@@ -525,7 +524,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span>2020-04-21</span>
+      <span>2021-02-01</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -534,8 +533,8 @@
       <span class="pc-show language" data-lan="category-in">分类于</span>
       
       
-      <a href="https://juju527.github.io/tag/vbTH6kVYh/">
-        <span>主席树</span>
+      <a href="https://juju527.github.io/tag/UmHSryuNg/">
+        <span>虚树</span>
       </a>、
       
       
@@ -550,17 +549,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>20<span class="language" data-lan="minute">分钟</span></span>
+      <span>2<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>3622<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>455<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/post/zhu-xi-shu/" data-flag-title="主席树" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/xu-shu/" data-flag-title="虚树" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -569,587 +568,49 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="主席树可持久化线段树">主席树(可持久化线段树)</h2>
-<blockquote>
-<p>部分可持久化：<br>
-可以访问旧版本，但只能修改新版本<br>
-完全可持久化：<br>
-支持访问，修改旧版本得到答案，修改新版本<br>
-汇合可持久化：<br>
-在完全可持久化的基础上支持合并</p>
-</blockquote>
-<p>这里的版本一般指一次操作后的状态<br>
-而主席树一般支持<strong>完全可持久化</strong></p>
-<h3 id="模板可持久化线段树-1主席树"><a href="https://www.luogu.com.cn/problem/P3834">【模板】可持久化线段树 1（主席树）</a></h3>
-<p>找区间k小值<br>
-对于k小值问题，我们很容易想到<strong>权值线段树</strong>来解决<br>
-而对于一个随意的区间要求k小值的话就不太能这么做了</p>
-<p>权值线段树：不考虑原序列的顺序，只关心原数的权值<br>
-红色字表示该结点维护的权值区间<br>
-下方的黑色序列2135167表示原序列<br>
-而这棵线段树表示在插入序列所有元素后线段树的节点状态<br>
-每个结点上的蓝字表示该结点维护的区间有多少个元素<br>
-<img src="https://img-blog.csdnimg.cn/2019121611101698.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p0eV9qdQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-而我们对于单纯的k小值问题，我们的实现代码如下</p>
-<pre><code class="language-cpp">int query(int k,int rk){
-	while(1){
-		int ls=tree[k].ls;
-		int rs=tree[k].rs;
-		int mid=l+((r-l)&gt;&gt;1);
-		if(l==r)
-			return w[l];
-		if(tree[ls].sum=rk){
-			k=ls;
-			l=l;
-			r=mid;
-			continue;
-		}
-		rk-=(tree[ls].sum);
-		k=rs;
-		l=mid+1;
-		r=r;
+              <h2 id="虚树">虚树</h2>
+<p>将树上某些关键点拿出来，保持一定祖先关系形成的树</p>
+<h3 id="性质">性质</h3>
+<ol>
+<li>k个关键点构成的虚树大小上线为2k-1，在 虚树形态为一颗完全二叉树时实现</li>
+<li>虚树上节点集合为按dfs序排序后相邻节点的lca所构成的集合与关键点集合的并集</li>
+</ol>
+<h3 id="构建">构建</h3>
+<p>不妨设dfs序先左后右<br>
+考虑按dfs序排序后增量构建与<strong>虚树的最右链</strong><br>
+<strong>最右链</strong>：当前加入的最后一个点到虚树根的一条链（当前虚树最右端的链）<br>
+具体实现用栈来<br>
+当加入一个新点时，与最右链上的点进行比对，加入虚树<br>
+讨论加入新点x的情况，设y=lca(x,st[top])</p>
+<ol>
+<li>点x在st[top]的子树里<br>
+在最右链中加入x即可</li>
+<li>点x不在st[top]的子树里且在st[top-1]的子树里且y不为st[top-1]<br>
+此时y在st[top]到st[top-1]的路径上<br>
+更新最右链（st[top-1]-&gt;st[top]变为st[top-1]-&gt;y-&gt;x），并将(st[top-1],st[top])加入虚树边集</li>
+<li>点x不在st[top]的子树里且在st[top-1]的子树里且y为st[top-1]<br>
+更新最右链（st[top-1]-&gt;st[top]变为st[top-1]-&gt;x），并将(st[top-1],st[top])加入虚树边集</li>
+<li>点x不在st[top-1]的路径里<br>
+根据y所在位置退栈更新最右链直至变为Case1/2/3</li>
+</ol>
+<h4 id="代码实现">代码实现</h4>
+<pre><code class="language-cpp">int tp=0,len=0;
+int st[maxn],b[maxn];
+void ins(int x){
+	if(tp==0){st[++tp]=x;b[++len]=x;return ;}
+	int p=lca(st[tp],x);
+	while(dep[st[tp-1]]&gt;dep[p]){
+		add(st[tp-1],st[tp]);
+		tp--;
 	}
-}
-	
-</code></pre>
-<p>那么我们能想到用n个前缀的权值线段树像访问<strong>前缀和</strong>一样去做<br>
-也就是我们对于线段树i里面存储了原序列1～i个数的信息<br>
-而对于一个区间l～r的信息<br>
-<strong>我们只需将第r个线段树的所有信息与第l-1个线段树的所有信息相减即能得到</strong></p>
-<p>那么问题随即又来了<br>
-这里我们需要n^2级别的空间<br>
-这肯定是承受不了的<br>
-而我们考虑到对于第i棵线段树和第i+1棵线段树<br>
-只是加入了a[i+1]这个数<br>
-那么应该只改变了logn个节点的信息<br>
-而因为主席树需要保证所有线段树信息的完整<br>
-所以核心思想就是<strong>只加点不改信息</strong><br>
-在这个核心思想的指导下<br>
-我们对于原来的每一棵完整的线段树<br>
-变成加入logn个节点<br>
-而其它节点我们就直接让新增的节点指向前一个版本的树节点就好了<br>
-<img src="https://img-blog.csdnimg.cn/20191216112347429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p0eV9qdQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-42表示原序列<br>
-至此，我们就能愉快的把空间复杂度降至nlogn了</p>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=200005;
-struct number{
-	int id,x,rk;
-}a[maxn];
-struct node{
-	int ls,rs;
-	int sum;
-}tree[20*maxn];
-int n,m,p;
-int cnt=0;
-int root[maxn];
-int w[maxn];
-int read(){
-	int x=0,y=1;
-	char ch=getchar();
-	while(ch&lt;'0'||ch&gt;'9'){if(ch=='-')y=-1;ch=getchar();}
-	while(ch&gt;='0'&amp;&amp;ch&lt;='9')x=(x&lt;&lt;3)+(x&lt;&lt;1)+(ch^48),ch=getchar();
-	return x*y;
-}
-bool cmp1(number i,number j){
-	return i.x&lt;j.x;
-}
-bool cmp2(number i,number j){
-	return i.id&lt;j.id;
-}
-void build(int l,int r){
-	cnt++;
-	int k=cnt;
-	if(l==r){
-		tree[k].ls=tree[k].rs=tree[k].sum=0;
-		if(l==a[1].rk)tree[k].sum=1;
-		return ;
+	if(st[tp]!=p){
+		if(st[tp-1]==p){add(st[tp-1],st[tp],0);tp--;}
+		else{add(p,st[tp]);b[++len]=p;st[tp]=p;}
 	}
-	int mid=l+((r-l)&gt;&gt;1);
-	int ls,rs;
-	ls=cnt+1;
-	build(l,mid);
-	rs=cnt+1;
-	build(mid+1,r);
-	tree[k].ls=ls;
-	tree[k].rs=rs;
-	tree[k].sum=tree[ls].sum+tree[rs].sum;
-}
-void insert(int k2,int l,int r,int val){
-	cnt++;
-	int k1=cnt;
-	if(l==r){
-		tree[k1].ls=tree[k1].rs=0;
-		tree[k1].sum=tree[k2].sum+1;//在前一棵树的基础上加一个点
-		return ;
-	}
-	int mid=l+((r-l)&gt;&gt;1);
-	if(val&lt;=mid){
-		tree[k1].rs=tree[k2].rs;
-		tree[k1].ls=cnt+1;
-		insert(tree[k2].ls,l,mid,val);
-	}
-	else{
-		tree[k1].ls=tree[k2].ls;
-		tree[k1].rs=cnt+1;
-		insert(tree[k2].rs,mid+1,r,val);
-	}
-	int ls=tree[k1].ls,rs=tree[k1].rs;
-	tree[k1].sum=tree[ls].sum+tree[rs].sum;
-}
-int query(int lt,int rt,int rk){
-	int k1=root[lt-1],k2=root[rt];
-	int l=1,r=p;
-	while(1){
-		int ls1=tree[k1].ls;
-		int ls2=tree[k2].ls;
-		int rs1=tree[k1].rs;
-		int rs2=tree[k2].rs;
-		int mid=l+((r-l)&gt;&gt;1);
-		if(l==r)
-			return w[l];
-		if(tree[ls2].sum-tree[ls1].sum&gt;=rk){
-			k1=ls1;
-			k2=ls2;
-			l=l;
-			r=mid;
-			continue;
-		}
-		rk-=(tree[ls2].sum-tree[ls1].sum);
-		k1=rs1;
-		k2=rs2;
-		l=mid+1;
-		r=r;
-	}
-}
-int main()
-{
-//	freopen(&quot;testdata.in&quot;,&quot;r&quot;,stdin);
-//	freopen(&quot;ans.out&quot;,&quot;w&quot;,stdout);
-	n=read();m=read();
-	for(int i=1;i&lt;=n;i++){
-		a[i].id=i;
-		a[i].x=read();
-	}
-	sort(a+1,a+n+1,cmp1);
-	a[0].x=-1e9-1;
-	for(int i=1;i&lt;=n;i++){
-		if(a[i].x&gt;a[i-1].x)w[++p]=a[i].x;
-		a[i].rk=p;
-	}
-	sort(a+1,a+n+1,cmp2);
-	//离散化，将值域降到'n'的级别
-	build(1,p);
-	root[1]=1;
-	//一棵空树
-	for(int i=2;i&lt;=n;i++){
-		root[i]=cnt+1;//每棵线段树的根
-		insert(root[i-1],1,p,a[i].rk);
-	}
-	for(int i=1;i&lt;=m;i++){
-		int l,r,k;
-		l=read();r=read();k=read();
-		printf(&quot;%d\n&quot;,query(l,r,k));
-	}
-	return 0;
-}
-
-</code></pre>
-<h3 id="模板可持久化数组可持久化线段树平衡树"><a href="https://www.luogu.com.cn/problem/P3919">【模板】可持久化数组（可持久化线段树/平衡树）</a></h3>
-<p>对于一个数组，我们不知道怎么可持久化<br>
-把它升级成更高级的结构——线段树，我们不就会了吗</p>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=1000005,maxm=1000005;
-struct node{
-	int ls,rs;
-	int x;
-}tree[20*maxn];
-int n,m;
-int cnt;
-int root[maxm];
-int a[maxn];
-int read(){
-	int x=0,y=1;
-	char ch=getchar();
-	while(ch&lt;'0'||ch&gt;'9'){if(ch=='-')y=-1;ch=getchar();}
-	while(ch&gt;='0'&amp;&amp;ch&lt;='9')x=(x&lt;&lt;3)+(x&lt;&lt;1)+(ch^48),ch=getchar();
-	return x*y;
-}
-void build(int l,int r){
-	int k=++cnt;
-	if(l==r){
-		tree[k].ls=tree[k].rs=0;
-		tree[k].x=a[l];
-		return ;
-	}
-	int mid=l+((r-l)&gt;&gt;1);
-	tree[k].ls=cnt+1;
-	build(l,mid);
-	tree[k].rs=cnt+1;
-	build(mid+1,r);
-}
-void modify(int k2,int pos,int val){
-	int l=1,r=n;
-	while(1){
-		int k1=++cnt;
-		if(l==r){
-			tree[k1].ls=tree[k1].rs=0;
-			tree[k1].x=val;
-			return ;
-		}
-		int mid=l+((r-l)&gt;&gt;1);
-		if(pos&lt;=mid){
-			tree[k1].rs=tree[k2].rs;
-			tree[k1].ls=cnt+1;
-			k2=tree[k2].ls;
-			l=l;r=mid;
-		}
-		else{
-			tree[k1].ls=tree[k2].ls;
-			tree[k1].rs=cnt+1;
-			k2=tree[k2].rs;
-			l=mid+1;r=r;
-		}
-	}
-}
-int query(int k,int pos){
-	int l=1,r=n;
-	while(1){
-		int mid=l+((r-l)&gt;&gt;1);
-		if(l==r)
-			return tree[k].x;
-		if(pos&lt;=mid){
-			k=tree[k].ls;
-			l=l;r=mid;
-		}
-		else{
-			k=tree[k].rs;
-			l=mid+1;r=r;
-		}
-	}
-}
-int main()
-{
-	n=read();m=read();
-	for(int i=1;i&lt;=n;i++)
-		a[i]=read();
-	build(1,n);
-	root[0]=1;
-	for(int i=1;i&lt;=m;i++){
-		int v,opt,loc,val;
-		v=read();opt=read();loc=read();
-		if(opt==1){
-			val=read();
-			root[i]=cnt+1;
-			modify(root[v],loc,val);
-		}
-		else{
-			root[i]=root[v];
-			printf(&quot;%d\n&quot;,query(root[v],loc));
-		}
-	}
-	return 0;
-}
-</code></pre>
-<hr>
-<p>递归版本的函数写法</p>
-<pre><code class="language-cpp">void modify(int x,int y,int l,int r,int p){
-	if(l&gt;p||r&lt;p)return ;
-    if(l==r){
-		tree[x].ls=tree[x].rs=0;
-        tree[x].sum=tree[y].sum+p;
-        return ;
-    }
-    int mid=l+((r-l)&gt;&gt;1);
-    tree[x].sum=tree[y].sum+p;
-    if(p&lt;=mid){
-    	tree[x].ls=++cnt;
-        tree[x].rs=tree[y].rs;
-        modify(tree[x].ls,tree[y].ls,l,mid,p);
-    }
-    else{
-		tree[x].rs=++cnt;
-        tree[x].ls=tree[y].ls;
-        modify(tree[x].rs,tree[y].rs,mid+1,r,p);
-    }
-    return ;
-}
-int query(int x,int y,int l,int r,int p,int q){
-	if(l&gt;q||r&lt;p)return 0;
-    if(l&gt;=p&amp;&amp;r&lt;=q)return tree[y].sum-tree[x].sum;
-    int mid=l+((r-l)&gt;&gt;1);
-    int tmp1=query(tree[x].ls,tree[y].ls,l,mid,p,q);
-    int tmp2=query(tree[x].rs,tree[y].rs,mid+1,r,p,q);
-    return tmp1+tmp2;
-}
-</code></pre>
-<h4 id="jsoi2018列队"><a href="https://www.luogu.com.cn/problem/P4559">[JSOI2018]列队</a></h4>
-<p>orz 九条可怜</p>
-<p>我们可以证明这样一个小小的结论</p>
-<p>我们在[k,k+r-l]这个区间内，一定存在一条分割线</p>
-<p>满足该线左边的人就站到该线左边的位置，右边的站在右边的位置</p>
-<p>这样一定最优</p>
-<p>如果左右两边有两人分别坐标为x,y,x在左，y在右</p>
-<p>他们原本的目标位置是u,v,u在左，v在右</p>
-<p>现在两人目标位置交换</p>
-<p>那么距离和为|x-v|+|y-u|=v-x+y-u</p>
-<p>原距离和为|x-u|+|y-v|</p>
-<p>若u&lt;=x,v&lt;=y</p>
-<p>原式等于x-u+y-v=y-u+x-v&lt;y-u+(-x)+v</p>
-<p>若u&lt;=x,v&gt;y</p>
-<p>原式等于x-u+v-y=v-u+x-y&lt;v-u-x+y</p>
-<p>若u&gt;x,v&lt;=y</p>
-<p>原式等于u-x+y-v=y-x+u-v&lt;y-x-u+v</p>
-<p>若u&gt;x,v&gt;y</p>
-<p>原式等于u-x+v-y=v-x-y+u&lt;v-x+y-u</p>
-<p>综上证毕</p>
-<p>那么我们直接建个主席树</p>
-<p>维护两个信息</p>
-<p>坐标和，以及数量</p>
-<p>我们二分这个分割线的位置当分割线左边的人正好有从k到分割线这么多个时就找到了</p>
-<p>但我被愉快的卡常了</p>
-<p>。。。</p>
-<pre><code class="language-cpp">#pragma GCC diagnostic error &quot;-std=c++14&quot;
-#pragma GCC target(&quot;avx&quot;)
-#pragma GCC optimize(3)
-#pragma GCC optimize(&quot;Ofast&quot;)
-#pragma GCC optimize(&quot;inline&quot;)
-#pragma GCC optimize(&quot;-fgcse&quot;)
-#pragma GCC optimize(&quot;-fgcse-lm&quot;)
-#pragma GCC optimize(&quot;-fipa-sra&quot;)
-#pragma GCC optimize(&quot;-ftree-pre&quot;)
-#pragma GCC optimize(&quot;-ftree-vrp&quot;)
-#pragma GCC optimize(&quot;-fpeephole2&quot;)
-#pragma GCC optimize(&quot;-ffast-math&quot;)
-#pragma GCC optimize(&quot;-fsched-spec&quot;)
-#pragma GCC optimize(&quot;unroll-loops&quot;)
-#pragma GCC optimize(&quot;-falign-jumps&quot;)
-#pragma GCC optimize(&quot;-falign-loops&quot;)
-#pragma GCC optimize(&quot;-falign-labels&quot;)
-#pragma GCC optimize(&quot;-fdevirtualize&quot;)
-#pragma GCC optimize(&quot;-fcaller-saves&quot;)
-#pragma GCC optimize(&quot;-fcrossjumping&quot;)
-#pragma GCC optimize(&quot;-fthread-jumps&quot;)
-#pragma GCC optimize(&quot;-funroll-loops&quot;)
-#pragma GCC optimize(&quot;-fwhole-program&quot;)
-#pragma GCC optimize(&quot;-freorder-blocks&quot;)
-#pragma GCC optimize(&quot;-fschedule-insns&quot;)
-#pragma GCC optimize(&quot;inline-functions&quot;)
-#pragma GCC optimize(&quot;-ftree-tail-merge&quot;)
-#pragma GCC optimize(&quot;-fschedule-insns2&quot;)
-#pragma GCC optimize(&quot;-fstrict-aliasing&quot;)
-#pragma GCC optimize(&quot;-fstrict-overflow&quot;)
-#pragma GCC optimize(&quot;-falign-functions&quot;)
-#pragma GCC optimize(&quot;-fcse-skip-blocks&quot;)
-#pragma GCC optimize(&quot;-fcse-follow-jumps&quot;)
-#pragma GCC optimize(&quot;-fsched-interblock&quot;)
-#pragma GCC optimize(&quot;-fpartial-inlining&quot;)
-#pragma GCC optimize(&quot;no-stack-protector&quot;)
-#pragma GCC optimize(&quot;-freorder-functions&quot;)
-#pragma GCC optimize(&quot;-findirect-inlining&quot;)
-#pragma GCC optimize(&quot;-fhoist-adjacent-loads&quot;)
-#pragma GCC optimize(&quot;-frerun-cse-after-loop&quot;)
-#pragma GCC optimize(&quot;inline-small-functions&quot;)
-#pragma GCC optimize(&quot;-finline-small-functions&quot;)
-#pragma GCC optimize(&quot;-ftree-switch-conversion&quot;)
-#pragma GCC optimize(&quot;-foptimize-sibling-calls&quot;)
-#pragma GCC optimize(&quot;-fexpensive-optimizations&quot;)
-#pragma GCC optimize(&quot;-funsafe-loop-optimizations&quot;)
-#pragma GCC optimize(&quot;inline-functions-called-once&quot;)
-#pragma GCC optimize(&quot;-fdelete-null-pointer-checks&quot;)
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=500005;
-struct node{
-	int ls,rs;
-	int num;
-	long long sum;
-}tree[21*maxn];
-int mx;
-int a[maxn];
-int cnt;
-int root[maxn];
-inline int read(){
-	register int x=0,y=1;
-	register char ch=getchar();
-	while(ch&lt;'0'||ch&gt;'9'){if(ch=='-')y=-1;ch=getchar();}
-	while(ch&gt;='0'&amp;&amp;ch&lt;='9')x=(x&lt;&lt;3)+(x&lt;&lt;1)+(ch^48),ch=getchar();
-	return x*y;
-}
-inline void write(long long x){
-	if(!x)return ;
-	write(x/10);
-	putchar(x%10+'0');
+	st[++tp]=x;b[++len]=x;
 	return ;
 }
-inline void modify(register int x,register int y,register int l,register int r,register int p){
-	if(l&gt;p||r&lt;p)return ;
-	if(l==r){
-		tree[x].ls=tree[x].rs=0;
-		tree[x].num=tree[y].num+1;
-		tree[x].sum=tree[y].sum+p;
-		return ;
-	}
-	register int mid=l+((r-l)&gt;&gt;1);
-	if(p&lt;=mid){
-		tree[x].ls=++cnt;
-		tree[x].rs=tree[y].rs;
-		modify(tree[x].ls,tree[y].ls,l,mid,p);
-	}
-	else{
-		tree[x].rs=++cnt;
-		tree[x].ls=tree[y].ls;
-		modify(tree[x].rs,tree[y].rs,mid+1,r,p);
-	}
-	tree[x].num=tree[y].num+1;
-	tree[x].sum=tree[y].sum+p;
-	return ;
-}
-inline int query1(register int x,register int y,register int l,register int r,register int p,register int q){
-	if(l&gt;q||r&lt;p)return 0;
-	if(l&gt;=p&amp;&amp;r&lt;=q)return tree[y].num-tree[x].num;
-	register int mid=l+((r-l)&gt;&gt;1);
-	register int tmp1,tmp2;
-	tmp1=query1(tree[x].ls,tree[y].ls,l,mid,p,q);
-	tmp2=query1(tree[x].rs,tree[y].rs,mid+1,r,p,q);
-	return tmp1+tmp2;
-}
-inline long long query2(register int x,register int y,register int l,register int r,register int p,register int q){
-	if(l&gt;q||r&lt;p)return 0;
-	if(l&gt;=p&amp;&amp;r&lt;=q)return tree[y].sum-tree[x].sum;
-	register int mid=l+((r-l)&gt;&gt;1);
-	register long long tmp1=0,tmp2=0;
-	tmp1=query2(tree[x].ls,tree[y].ls,l,mid,p,q);
-	tmp2=query2(tree[x].rs,tree[y].rs,mid+1,r,p,q);
-	return tmp1+tmp2;
-}
-inline void search(register int l,register int r,register int x,register int y){
-	register long long lft=l,rght=r;
-	l-=2;r+=2;
-	while(l+1&lt;r){
-		register long long mid=l+((r-l)&gt;&gt;1);
-		if(query1(root[x-1],root[y],1,mx,1,mid)&lt;=mid-lft+1)
-			r=mid;
-		else
-			l=mid;
-	}
-	register long long tmp1=(lft+r)*(r-lft+1)/2;
-	register long long tmp2=(r+1+rght)*(rght-r)/2;
-	register long long ans1=query2(root[x-1],root[y],1,mx,1,r);
-	register long long ans2=query2(root[x-1],root[y],1,mx,r+1,mx);
-	write(tmp1-ans1+ans2-tmp2);
-	if(tmp1-ans1+ans2-tmp2==0)putchar('0');
-	putchar('\n');
-	return ;
-}
-int main(){
-	register int n,m;
-	n=read();m=read();
-	tree[0].ls=tree[0].rs=tree[0].num=tree[0].sum=0;
-	for(int i=1;i&lt;=n;i++){a[i]=read();mx=max(mx,a[i]);}
-	for(register int i=1;i&lt;=n;i++){
-		root[i]=++cnt;
-		modify(root[i],root[i-1],1,mx,a[i]);
-	}
-	for(register int i=1;i&lt;=m;i++){
-		register int l,r,k;
-		l=read();r=read();k=read();
-		search(k,k+r-l,l,r);
-	}
-	return 0;
-}
 </code></pre>
-<h4 id="fjoi2016神秘数"><a href="https://www.luogu.com.cn/problem/P4587">[FJOI2016]神秘数</a></h4>
-<p>一样是推结论</p>
-<figure data-type="image" tabindex="1"><img src="https://s2.ax1x.com/2020/02/07/121ovV.png" alt="" loading="lazy"></figure>
-<p>考虑暴力我们可以先把区间排一遍序</p>
-<p>然后暴力扫一遍按照上面的方法即可得到答案</p>
-<p>复杂度O(n * n *log(n))</p>
-<p>显然这个复杂度不够优秀</p>
-<p>我们考虑现在已有可以凑出[1,y]</p>
-<p>那么我们想求出在a[l,r]范围内权值在[1,y+1]内的所有数的权值和</p>
-<p>这时我们的区间可以拓展为[1,sum],sum为权值和</p>
-<p>而上面的操作可以通过主席树实现</p>
-<p>我们考虑证明如此操作的复杂度</p>
-<figure data-type="image" tabindex="2"><img src="https://s2.ax1x.com/2020/02/07/123RsK.png" alt="" loading="lazy"></figure>
-<p>故每一次询问复杂度可以在O(logn*logT),T为值域</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=100005;
-struct node{
-	int ls,rs;
-	int sum;
-}tree[31*maxn];
-int cnt;
-int root[maxn];
-int read(){
-	int x=0,y=1;
-	char ch=getchar();
-	while(ch&lt;'0'||ch&gt;'9'){if(ch=='-')y=-1;ch=getchar();}
-	while(ch&gt;='0'&amp;&amp;ch&lt;='9')x=(x&lt;&lt;3)+(x&lt;&lt;1)+(ch^48),ch=getchar();
-	return x*y;
-}
-void modify(int x,int y,int l,int r,int p){
-	if(l&gt;p||r&lt;p)return ;
-	if(l==r){
-		tree[x].ls=tree[x].rs=0;
-		tree[x].sum=tree[y].sum+p;
-		return ;
-	}
-	int mid=l+((r-l)&gt;&gt;1);
-	tree[x].sum=tree[y].sum+p;
-	if(p&lt;=mid){
-		tree[x].ls=++cnt;
-		tree[x].rs=tree[y].rs;
-		modify(tree[x].ls,tree[y].ls,l,mid,p);
-	}
-	else{
-		tree[x].rs=++cnt;
-		tree[x].ls=tree[y].ls;
-		modify(tree[x].rs,tree[y].rs,mid+1,r,p);
-	}
-	return ;
-}
-int query(int x,int y,int l,int r,int p,int q){
-	if(l&gt;q||r&lt;p)return 0;
-	if(l&gt;=p&amp;&amp;r&lt;=q)return tree[y].sum-tree[x].sum;
-	int mid=l+((r-l)&gt;&gt;1);
-	int tmp1=query(tree[x].ls,tree[y].ls,l,mid,p,q);
-	int tmp2=query(tree[x].rs,tree[y].rs,mid+1,r,p,q);
-	return tmp1+tmp2;
-}
-int main(){
-	int n,m;
-	n=read();
-	for(int i=1;i&lt;=n;i++){
-		int x;
-		x=read();
-		root[i]=++cnt; 
-		modify(root[i],root[i-1],1,1000000000,x);
-	}
-	m=read();
-	for(int i=1;i&lt;=m;i++){
-		int l,r;
-		l=read();r=read();
-		int y=0,tmp;
-		while(1){
-			tmp=query(root[l-1],root[r],1,1000000000,1,y+1);
-			if(tmp&gt;y)y=tmp;
-			else break;
-		}
-		printf(&quot;%d\n&quot;,y+1);
-	}
-	return 0;
-}
-
-</code></pre>
-<hr>
-<p>另外，有一些主席树的经典应用<br>
-如维护一个二维矩阵的信息<br>
-<img src="https://img-blog.csdnimg.cn/20191216113541178.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p0eV9qdQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-一样利用前缀的思想</p>
 
             </div>
             
@@ -1162,7 +623,7 @@ int main(){
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://juju527.github.io/post/zhu-xi-shu/" title="主席树">https://juju527.github.io/post/zhu-xi-shu/</a>
+      <a href="https://juju527.github.io/post/xu-shu/" title="虚树">https://juju527.github.io/post/xu-shu/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -1171,7 +632,7 @@ int main(){
   </ul>
   <div class="tags">
     
-      <a href="https://juju527.github.io/tag/vbTH6kVYh/"># 主席树</a>
+      <a href="https://juju527.github.io/tag/UmHSryuNg/"># 虚树</a>
     
       <a href="https://juju527.github.io/tag/8KLqOzsh1/"># 学习笔记</a>
     
@@ -1181,6 +642,10 @@ int main(){
       
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="NOIP2020游记" href="https://juju527.github.io/post/noip2020-you-ji/">NOIP2020游记</a>
+        <a class="nav-mobile-next" title="NOIP2020游记" href="https://juju527.github.io/post/noip2020-you-ji/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
