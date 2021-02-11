@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://juju527.github.io</id>
     <title>juju527&apos;s blog</title>
-    <updated>2021-02-08T12:22:57.486Z</updated>
+    <updated>2021-02-11T14:38:09.522Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://juju527.github.io"/>
     <link rel="self" href="https://juju527.github.io/atom.xml"/>
@@ -10,6 +10,53 @@
     <logo>https://juju527.github.io/images/avatar.png</logo>
     <icon>https://juju527.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, juju527&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[WC2021 游记]]></title>
+        <id>https://juju527.github.io/post/wc2021-you-ji/</id>
+        <link href="https://juju527.github.io/post/wc2021-you-ji/">
+        </link>
+        <updated>2021-02-11T14:37:31.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="wc2021游记">WC2021游记</h2>
+<p>upd on 2021.2.11 除夕夜</p>
+<p>之前一直没写，正好这两天补了WC的题，正好不想看春晚，就决定把游记写出来吧</p>
+<h3 id="day-">Day -</h3>
+<p>除了jmr那一堂外，课程听到1h后就都开始自闭了，顺便一说jmr鸽鸽笑了一节课（bushi</p>
+<p>基本ioi题都没听了</p>
+<p>我在机房一直在写远古集训队作业，被ljf爆d为什么不做今年的集训队作业</p>
+<p>菜鸡实锤了</p>
+<h3 id="day-1">Day 1</h3>
+<p>WC就只有1天考试嘛，正常到了考场，开始考试</p>
+<p>一上来觉得T1之前做过类似的括号问题，隐约记得一点思路，认为大概 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 不难</p>
+<p>（认为自己做过的思维定势让我没能挖掘T1的性质</p>
+<p>仔细想想自己好像只会立方的没前途做法，和最暴力的32pts没区别</p>
+<p>然后不太会优化，就先去开T2</p>
+<p>发现出题人良心的送了50pts，然后赶紧去写</p>
+<p>由于本人对于中缀表达式一窍不通，幸亏前两天才补了jmr讲的一道跟中缀相关的题，才拿了分</p>
+<p>大概写了很久，发现还有20pts也很好拿，又写了很久，终于把T2拿到了大众分</p>
+<p>其实当时已经考虑把n个位置分开了，但局限于把每个位置的m个值具体排序出来</p>
+<p>而不是聪明的考虑状压集合</p>
+<p>然后看了眼T3没什么想法</p>
+<p>就先把T1的naive最坏立方的暴力写了，用bitset乱卡了一波常，发现能跑到48pts</p>
+<p>就开始刚T3，一开始以为把通项写出来能上bsgs什么的</p>
+<p>忘记推fib通项，隐约记得有两个关于根号5的n次方，大概不太行</p>
+<p>又用exgcd想了很久桃子，最后随便写了个暴力猜会给我那20pts</p>
+<p>不知道斐波那契有循环节的我留下无知的泪水</p>
+<p>然后就开始横跳</p>
+<p>预计得分 [32,48]+70+[0,20]=[102,138]，实际得分138</p>
+<h3 id="day-2">Day 2</h3>
+<p>上午只看了队爷选拔的最后一幕，下午去上文化课了，没看颁奖</p>
+<p>回来发现自己 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>Ag</mtext></mrow><annotation encoding="application/x-tex">\text{Ag}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Ag</span></span></span></span></span> 了，且离 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>Au</mtext></mrow><annotation encoding="application/x-tex">\text{Au}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Au</span></span></span></span></span> 线只差20pts</p>
+<p>这次WC题大概算是较良心的一场了</p>
+<p>T1其实只要发现有连通块就好做了，T3的前40pts也只需要知道循环节就行</p>
+<p>也发现自己还是有很多不足的地方，还是太菜了</p>
+<h3 id="彩蛋">彩蛋</h3>
+<blockquote>
+<p>假设有 L 到 R，这是 L，这是 R。这些边我不加。这些边我不加！暴力怎么做？暴力是不是！加边、加边、加边，然后，并查集查询。</p>
+</blockquote>
+<p>WC考试中途去WC，遇见了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>Au</mtext></mrow><annotation encoding="application/x-tex">\text{Au}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Au</span></span></span></span></span> 带佬cxy</p>
+<p>文化课归来途中遇见带佬zzm，吐槽 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>220</mn><mo>→</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">220\to 20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">2</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span></span></span></span></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[虚树]]></title>
         <id>https://juju527.github.io/post/xu-shu/</id>
@@ -1833,314 +1880,6 @@ int main(){
 <p><a href="https://www.luogu.com.cn/problem/P3825">[NOI2017]游戏</a> 通过简单操作将少量3取值点变为2取值<br>
 <a href="https://www.luogu.com.cn/problem/P6378">[PA2010]Riddle</a> 优化建边2-SAT<br>
 <a href="https://www.luogu.com.cn/problem/UVA10319">Manhattan</a> 对2-SAT建边理解更加透彻</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【题解】 P4585 [FJOI2015]火星商店问题]]></title>
-        <id>https://juju527.github.io/post/ti-jie-p4585-fjoi2015huo-xing-shang-dian-wen-ti/</id>
-        <link href="https://juju527.github.io/post/ti-jie-p4585-fjoi2015huo-xing-shang-dian-wen-ti/">
-        </link>
-        <updated>2020-06-03T15:10:19.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="前置知识">前置知识</h3>
-<ol>
-<li>
-<p>线段树</p>
-</li>
-<li>
-<p>可持久化01trie</p>
-</li>
-</ol>
-<hr>
-<blockquote>
-<p>第一道线段树分治题</p>
-</blockquote>
-<blockquote>
-<p>线段树分治是一种按时间分治的方法</p>
-</blockquote>
-<blockquote>
-<p>由于其结构类似线段树，被称为线段树分治</p>
-</blockquote>
-<hr>
-<h3 id="题意坑点">题意坑点</h3>
-<p>下面这个讨论里叙述得很清楚了，这里不再赘述</p>
-<p><a href="https://www.luogu.com.cn/discuss/show/87100">传送门</a></p>
-<hr>
-<h3 id="线段树分治核心思想">线段树分治核心思想</h3>
-<p>将询问与修改离线</p>
-<p>可能有这几种情况</p>
-<ol>
-<li>
-<p>单点修改，单点查询</p>
-<p>这个完全不需要线段树分治吧</p>
-</li>
-<li>
-<p>单点修改，区间查询（例如本题）</p>
-<p>我们可以将每一个修改记录在包含该点的线段树上的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span>个节点上</p>
-<p>把查询分解成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span>个线段树上的区间记录在这<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span>个节点上</p>
-<p>由于查询的区间包括了我们记录下的每一个小区间</p>
-<p>而在每一个线段树区间记录下的修改都会影响这个区间</p>
-<p>正确性显然</p>
-<p>那么我们遍历一边整棵线段树，在每个节点进行该结点所记录的修改，再进行该结点的询问即可</p>
-</li>
-<li>
-<p>区间修改，单点查询</p>
-<p>将每一个修改分解成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span>个区间记录在线段树这<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span>个节点上</p>
-<p>将每一个查询记录在包含该点的线段树上的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span>个节点上</p>
-<p>遍历线段树类比情况2即可</p>
-</li>
-<li>
-<p>区间修改，区间查询</p>
-<p>结合情况2，3就是这个东西</p>
-</li>
-</ol>
-<p>我们还需注意在所有中，应该是进行完了修改就直接查询</p>
-<p>情况2中应在未递归时便撤销所有修改</p>
-<hr>
-<h3 id="本题做法">本题做法</h3>
-<p>我们把答案分两个部分来求</p>
-<h4 id="第一部分">第一部分</h4>
-<p>先用可持久化trie解决所有商店的特殊商品对询问的贡献</p>
-<p>这一部分不清楚的可以去学习下最大异或和</p>
-<h4 id="第二部分">第二部分</h4>
-<p>由于每个询问只能买某一段时间内的商品</p>
-<p>暴力的对所有区间做的时间复杂度可达<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>q</mi><mo>×</mo><mi>n</mi><mo>×</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>T</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(q\times n\times log T)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">)</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>为值域</p>
-<p>我们考虑刚刚学到的线段树分治</p>
-<p>将所有修改和询问按照上述的做法记录在线段树上</p>
-<p>进行线段树分治</p>
-<pre><code class="language-cpp">inline void solve(register int k,register int l,register int r){
-	Insert(k);//将所有修改加进可持久化01trie中
-	if(l==r){
-		for(register int i=0;i&lt;que[k].size();i++){
-			register int id=que[k][i].id;
-			register int x=que[k][i].l,y=que[k][i].r,val=que[k][i].x;
-			ans[id]=max(ans[id],query(x,y,val));
-		}
-        	//处理询问
-		Delete(k);//清空可持久化01trie
-		return ;
-	}
-	register int mid=l+((r-l)&gt;&gt;1);
-	for(register int i=0;i&lt;que[k].size();i++){
-		register int id=que[k][i].id;
-		register int x=que[k][i].l,y=que[k][i].r,val=que[k][i].x;
-		ans[id]=max(ans[id],query(x,y,val));
-	}
-	Delete(k);
-    //一定要先清空，这样做的原因应该比较显然
-	solve(k&lt;&lt;1,l,mid);
-	solve(k&lt;&lt;1|1,mid+1,r);
-	return ;
-}
-</code></pre>
-<p>这里处理可持久化01trie时需要用到一些叫常用的技巧</p>
-<p>由于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi><mi>p</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">upd</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mord mathdefault">d</span></span></span></span>的序列商店编号不连续，我们需要离散化</p>
-<p>在query时需要二分一下</p>
-<hr>
-<h3 id="复杂度分析">复杂度分析</h3>
-<p>根据上述的线段树分治需要记录的东西很容易看出空间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>+</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">nlogn+nlogT</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span></p>
-<p>由于我们会遍历所有记录的询问和查询共<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span>个</p>
-<p>无论是可持久化01trie的插入还是询问时间复杂度均为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(logn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
-<p>故总复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><msup><mi>g</mi><mn>2</mn></msup><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(nlog^2n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
-<h3 id="代码">代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=1000005,maxm=100005;
-struct Upd{
-	int s,v;
-	bool operator &lt;(Upd i)const{
-		return s&lt;i.s;
-	}
-};
-struct Que{
-	int id,l,r,x;
-};
-int ans[maxm];
-struct trie{
-	int s[2];
-	int b;
-}t[20*maxm];
-int tot=0;
-int rt[maxn];
-int lp[maxn],rp[maxn];
-int W=0;
-int shop[maxn];
-bool vis[maxm];
-vector&lt;Upd&gt;upd[maxm&lt;&lt;2];
-vector&lt;Que&gt;que[maxm&lt;&lt;2];
-inline int read(){
-    register int x=0,y=1;
-    register char ch=getchar();
-    while(ch&lt;48||ch&gt;57){if(ch==45)y=-1;ch=getchar();}
-    while(ch&gt;=48&amp;&amp;ch&lt;=57)x=(x&lt;&lt;3)+(x&lt;&lt;1)+(ch^48),ch=getchar();
-    return x*y;
-}
-inline void write(register int x){
-	if(!x)return ;
-	write(x/10);
-	putchar(x%10+'0');
-	return ;
-}
-inline void clear(register int k){
-	t[k].s[0]=t[k].s[1]=t[k].b=0;
-	return ;
-}
-inline int newnode(){
-	clear(tot+1);
-	return ++tot;
-}
-inline void ins(register int x,register int y,register int val){
-	if(!rt[x])rt[x]=newnode();
-	register int k=rt[x],l=rt[y];
-	t[k].b=x;
-	for(register int i=16;i&gt;=0;i--){
-		register bool to=((val&amp;(1&lt;&lt;i))&gt;&gt;i);
-		if(!t[k].s[to])t[k].s[to]=newnode();
-		t[k].s[to^1]=t[l].s[to^1];
-		k=t[k].s[to];
-		t[k].b=x;
-		l=t[l].s[to];
-	}
-	return ;
-}
-inline int search(register int x){
-	register int l=0,r=W+1;
-	while(l+1&lt;r){
-		register int mid=l+((r-l)&gt;&gt;1);
-		if(shop[mid]&lt;=x)
-			l=mid;
-		else
-			r=mid;
-	}
-	return l;
-}
-inline int query(register int l,register int r,register int val){
-	register int lft=l;
-	l=search(l);
-	r=search(r);
-	if(shop[l]&lt;lft)l++;
-	l=lp[l];r=rp[r];
-	register int k=rt[r],ans=0;
-	for(register int i=16;i&gt;=0;i--){
-		register bool to=((((val&amp;(1&lt;&lt;i)))&gt;&gt;i)^1);
-		if(t[k].s[to]==0||t[t[k].s[to]].b&lt;l)to^=1;
-		else ans+=(1&lt;&lt;i);
-		k=t[k].s[to];
-	}
-	return ans;
-}
-inline void modify1(register int k,register int l,register int r,register int x,register int p,register int val){
-	if(l&gt;x||r&lt;x)return ;
-	if(l==r){
-		upd[k].push_back((Upd){p,val});
-		return ;
-	}
-	register int mid=l+((r-l)&gt;&gt;1);
-	modify1(k&lt;&lt;1,l,mid,x,p,val);
-	modify1(k&lt;&lt;1|1,mid+1,r,x,p,val);
-	upd[k].push_back((Upd){p,val});
-	return ;
-}
-inline void modify2(register int k,register int l,register int r,register int x,register int y,register int id,register int p,register int q,register int val){
-	if(y&lt;x)return ;
-	if(l&gt;y||r&lt;x)return ;
-	if(l&gt;=x&amp;&amp;r&lt;=y){
-		que[k].push_back((Que){id,p,q,val});
-		return ;
-	}
-	register int mid=l+((r-l)&gt;&gt;1);
-	modify2(k&lt;&lt;1,l,mid,x,y,id,p,q,val);
-	modify2(k&lt;&lt;1|1,mid+1,r,x,y,id,p,q,val);
-	return ;
-}
-inline void Insert(register int k){
-	sort(upd[k].begin(),upd[k].end());
-	if(upd[k].size()){
-		ins(1,0,upd[k][0].v);
-		W=1;
-		shop[W]=upd[k][0].s;
-		lp[W]=1;
-	}
-	for(register int i=1;i&lt;upd[k].size();i++){
-		register int p1=upd[k][i].s,p2=upd[k][i-1].s;
-		ins(i+1,i,upd[k][i].v);
-		if(p1&gt;p2){
-			W++;
-			shop[W]=p1;
-			rp[W-1]=i;lp[W]=i+1;
-		}
-	}
-	rp[W]=upd[k].size();
-	return ;
-}
-inline void Delete(register int k){
-	for(register int i=1;i&lt;=tot;i++)clear(i);
-	for(register int i=1;i&lt;=upd[k].size();i++)rt[i]=0;
-	tot=0;
-	return ;
-}
-inline void solve(register int k,register int l,register int r){
-	Insert(k);
-	if(l==r){
-		for(register int i=0;i&lt;que[k].size();i++){
-			register int id=que[k][i].id;
-			register int x=que[k][i].l,y=que[k][i].r,val=que[k][i].x;
-			ans[id]=max(ans[id],query(x,y,val));
-		}
-		Delete(k);
-		return ;
-	}
-	register int mid=l+((r-l)&gt;&gt;1);
-	for(register int i=0;i&lt;que[k].size();i++){
-		register int id=que[k][i].id;
-		register int x=que[k][i].l,y=que[k][i].r,val=que[k][i].x;
-		ans[id]=max(ans[id],query(x,y,val));
-	}
-	Delete(k);
-	solve(k&lt;&lt;1,l,mid);
-	solve(k&lt;&lt;1|1,mid+1,r);
-	return ;
-}
-int main(){
-    freopen(&quot;[FJOI2015]火星商店问题.in&quot;,&quot;r&quot;,stdin);
-    freopen(&quot;[FJOI2015]火星商店问题.out&quot;,&quot;w&quot;,stdout);
-   	register int n,m;
-	n=read();m=read();
-	clear(0);
-	for(register int i=1;i&lt;=n;i++){
-		W++;
-		shop[W]=i;
-		lp[W]=i;rp[W]=i;
-		ins(i,i-1,read());
-	}
-	register int day=1;
-	for(register int i=1;i&lt;=m;i++){
-		register int opt,l,r,x,d;
-		opt=read();l=read();r=read();
-		if(!opt){
-			if(i&gt;1)day++;
-			modify1(1,1,m,day,l,r);
-		}
-		else{
-			vis[i]=1;
-			x=read();d=read();
-			modify2(1,1,m,max(day-d+1,1),day,i,l,r,x);
-			ans[i]=query(l,r,x);
-		}
-	}
-	for(register int i=1;i&lt;=tot;i++)clear(i);
-	for(register int i=1;i&lt;=n;i++)rt[i]=0;
-	tot=0;
-	solve(1,1,m);
-	for(register int i=1;i&lt;=m;i++)
-		if(vis[i]){
-			if(ans[i])write(ans[i]);
-			else putchar('0');
-			putchar('\n');
-		}
-    return 0;
-}
-
-</code></pre>
 ]]></content>
     </entry>
 </feed>
