@@ -9,7 +9,7 @@
 <meta name="description" content="因为失去，所以明白">
 <meta name="theme-color" content="#000">
 <title>莫队 | juju527&#39;s blog</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1613208184557">
+<link rel="shortcut icon" href="/favicon.ico?v=1613521390219">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -251,18 +251,23 @@
 </ul>
 </li>
 <li><a href="#ynoi2016%E8%BF%99%E6%98%AF%E6%88%91%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8F%91%E6%98%8E">[Ynoi2016]这是我自己的发明</a></li>
+</ul>
+</li>
 <li><a href="#%E5%B8%A6%E4%BF%AE%E8%8E%AB%E9%98%9F">带修莫队</a></li>
-<li><a href="#%E6%A0%91%E4%B8%8A%E8%8E%AB%E9%98%9F">树上莫队</a>
+<li><a href="#%E6%A0%91%E4%B8%8A%E8%8E%AB%E9%98%9F">树上莫队</a><br>
+*
 <ul>
 <li><a href="#cot2-count-on-a-tree-ii">COT2 - Count on a tree II</a></li>
 </ul>
 </li>
-<li><a href="#%E6%A0%91%E4%B8%8A%E5%B8%A6%E4%BF%AE%E8%8E%AB%E9%98%9F">树上带修莫队</a>
+<li><a href="#%E6%A0%91%E4%B8%8A%E5%B8%A6%E4%BF%AE%E8%8E%AB%E9%98%9F">树上带修莫队</a><br>
+*
 <ul>
 <li><a href="#wc2013%E7%B3%96%E6%9E%9C%E5%85%AC%E5%9B%AD">[WC2013]糖果公园</a></li>
 </ul>
 </li>
-<li><a href="#%E5%9B%9E%E6%BB%9A%E8%8E%AB%E9%98%9F">回滚莫队</a>
+<li><a href="#%E5%9B%9E%E6%BB%9A%E8%8E%AB%E9%98%9F">回滚莫队</a><br>
+*
 <ul>
 <li><a href="#%E6%A8%A1%E6%9D%BF%E5%9B%9E%E6%BB%9A%E8%8E%AB%E9%98%9F%E4%B8%8D%E5%88%A0%E9%99%A4%E8%8E%AB%E9%98%9F">【模板】回滚莫队&amp;不删除莫队</a></li>
 <li><a href="#rmq-problem-mex">Rmq Problem / mex</a></li>
@@ -270,8 +275,6 @@
 </ul>
 </li>
 <li><a href="#%E4%BA%8C%E6%AC%A1%E7%A6%BB%E7%BA%BF%E8%8E%AB%E9%98%9F">二次离线莫队</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -1361,7 +1364,7 @@ int main(){
 }
 
 </code></pre>
-<h3 id="带修莫队">带修莫队</h3>
+<h2 id="带修莫队">带修莫队</h2>
 <p><a href="https://www.luogu.com.cn/problem/P1903">[国家集训队]数颜色 / 维护队列</a></p>
 <p>带修改数颜色</p>
 <p>我们可以把修改看作第三维</p>
@@ -1490,7 +1493,7 @@ int main(){
 }
 
 </code></pre>
-<h3 id="树上莫队">树上莫队</h3>
+<h2 id="树上莫队">树上莫队</h2>
 <h4 id="cot2-count-on-a-tree-ii"><a href="https://www.luogu.com.cn/problem/SP10707">COT2 - Count on a tree II</a></h4>
 <p>考虑一个神奇的序：欧拉序</p>
 <p>就是dfs的时候不仅记录进栈的时间同时记录出栈的时间</p>
@@ -1659,7 +1662,7 @@ int main(){
 }
 
 </code></pre>
-<h3 id="树上带修莫队">树上带修莫队</h3>
+<h2 id="树上带修莫队">树上带修莫队</h2>
 <p>就树上莫队带个修改，写欧拉序后转变成序列带修莫队</p>
 <h4 id="wc2013糖果公园"><a href="https://www.luogu.com.cn/problem/P4074">[WC2013]糖果公园</a></h4>
 <pre><code class="language-cpp">#pragma GCC optimize(2)
@@ -1832,7 +1835,7 @@ int main(){
 }
 
 </code></pre>
-<h3 id="回滚莫队">回滚莫队</h3>
+<h2 id="回滚莫队">回滚莫队</h2>
 <p>我们可能遇到一些毒瘤题</p>
 <p>发现增加或者删除很简单，而另一操作几乎不可做</p>
 <p>回滚莫队应运而生</p>
@@ -2197,7 +2200,7 @@ int main(){
 	return 0;
 }
 </code></pre>
-<h3 id="二次离线莫队">二次离线莫队</h3>
+<h2 id="二次离线莫队">二次离线莫队</h2>
 <p>lxl大佬提出的用于<strong>解决莫队转移复杂度较高问题</strong>的神奇操作</p>
 <p><a href="https://www.luogu.com.cn/problem/P4887">【模板】莫队二次离线（第十四分块(前体)）</a></p>
 <p>例如此题</p>
@@ -10207,7 +10210,7 @@ int main(){
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;带修莫队&#34;&gt;带修莫队&lt;/h3&gt;
+&lt;h2 id=&#34;带修莫队&#34;&gt;带修莫队&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P1903&#34;&gt;[国家集训队]数颜色 / 维护队列&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;带修改数颜色&lt;/p&gt;
 &lt;p&gt;我们可以把修改看作第三维&lt;/p&gt;
@@ -10336,7 +10339,7 @@ int main(){
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;树上莫队&#34;&gt;树上莫队&lt;/h3&gt;
+&lt;h2 id=&#34;树上莫队&#34;&gt;树上莫队&lt;/h2&gt;
 &lt;h4 id=&#34;cot2-count-on-a-tree-ii&#34;&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/SP10707&#34;&gt;COT2 - Count on a tree II&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;考虑一个神奇的序：欧拉序&lt;/p&gt;
 &lt;p&gt;就是dfs的时候不仅记录进栈的时间同时记录出栈的时间&lt;/p&gt;
@@ -10505,7 +10508,7 @@ int main(){
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;树上带修莫队&#34;&gt;树上带修莫队&lt;/h3&gt;
+&lt;h2 id=&#34;树上带修莫队&#34;&gt;树上带修莫队&lt;/h2&gt;
 &lt;p&gt;就树上莫队带个修改，写欧拉序后转变成序列带修莫队&lt;/p&gt;
 &lt;h4 id=&#34;wc2013糖果公园&#34;&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P4074&#34;&gt;[WC2013]糖果公园&lt;/a&gt;&lt;/h4&gt;
 &lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;#pragma GCC optimize(2)
@@ -10678,7 +10681,7 @@ int main(){
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;回滚莫队&#34;&gt;回滚莫队&lt;/h3&gt;
+&lt;h2 id=&#34;回滚莫队&#34;&gt;回滚莫队&lt;/h2&gt;
 &lt;p&gt;我们可能遇到一些毒瘤题&lt;/p&gt;
 &lt;p&gt;发现增加或者删除很简单，而另一操作几乎不可做&lt;/p&gt;
 &lt;p&gt;回滚莫队应运而生&lt;/p&gt;
@@ -11043,7 +11046,7 @@ int main(){
 	return 0;
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;二次离线莫队&#34;&gt;二次离线莫队&lt;/h3&gt;
+&lt;h2 id=&#34;二次离线莫队&#34;&gt;二次离线莫队&lt;/h2&gt;
 &lt;p&gt;lxl大佬提出的用于&lt;strong&gt;解决莫队转移复杂度较高问题&lt;/strong&gt;的神奇操作&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P4887&#34;&gt;【模板】莫队二次离线（第十四分块(前体)）&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;例如此题&lt;/p&gt;
