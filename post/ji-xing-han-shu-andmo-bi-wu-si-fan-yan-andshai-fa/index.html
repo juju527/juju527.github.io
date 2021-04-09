@@ -9,7 +9,7 @@
 <meta name="description" content="因为失去，所以明白">
 <meta name="theme-color" content="#000">
 <title>积性函数&amp;莫比乌斯反演&amp;筛法 | juju527&#39;s blog</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1616253288040">
+<link rel="shortcut icon" href="/favicon.ico?v=1617961720663">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -198,7 +198,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">25</span>
+        <span class="site-item-stat-count">26</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -1554,6 +1554,18 @@ int main(){
     <div class="result" id="result">
       
       <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://juju527.github.io/post/hnoi2021-you-ji/"" data-c="
+          &lt;h2 id=&#34;day-0&#34;&gt;Day 0&lt;/h2&gt;
+&lt;p&gt;&lt;s&gt;看机房同学打slay&lt;/s&gt;&lt;br&gt;
+自己写了点板子，然后下午听动员大会&lt;br&gt;
+今年没开茶话会差评（bushi&lt;br&gt;
+理论上初中最后一场OI比赛了，希望能善始善终吧&lt;br&gt;
+省选前的几场模拟赛状态还行，心态挺稳的，完全不慌&lt;br&gt;
+希望高二学长们都有个好结果吧&lt;/p&gt;
+">HNOI2021游记</a>
+      </div>
+      
+      <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://juju527.github.io/post/xian-tu/"" data-c="
           &lt;h2 id=&#34;弦图&#34;&gt;弦图&lt;/h2&gt;
 &lt;h3 id=&#34;基本介绍与基本性质&#34;&gt;基本介绍与基本性质&lt;/h3&gt;
@@ -1740,7 +1752,7 @@ s-65,47,-65,47z M834 80H400000v40H845z&#39;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/sp
 &lt;p&gt;假设有 L 到 R，这是 L，这是 R。这些边我不加。这些边我不加！暴力怎么做？暴力是不是！加边、加边、加边，然后，并查集查询。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;WC考试中途去WC，遇见了&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mtext&gt;Au&lt;/mtext&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\text{Au}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.68333em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord text&#34;&gt;&lt;span class=&#34;mord&#34;&gt;Au&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 带佬cxy&lt;/p&gt;
-">WC2021 游记</a>
+">WC2021游记</a>
       </div>
       
       <div class="item">
@@ -2082,6 +2094,39 @@ s-65,47,-65,47z M834 80H400000v40H845z&#39;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/sp
 	if(opt==1)return ;
 	long long inv=power(lim,mod-2);
 	for(int i=0;i&amp;lt;lim;i++)f[i]=f[i]*inv%mod;
+	return ;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这里放一份速度还行的预处理原根板子&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;int pw[2][4*maxn];
+void pre(int lim){
+	int c=0;
+	for(int i=1;i&amp;lt;lim;i&amp;lt;&amp;lt;=1,c++){
+		pw[0][i]=pw[1][i]=1;
+		pw[0][i+1]=power(G,(mod-1)/(i&amp;lt;&amp;lt;1));
+		pw[1][i+1]=power(Gi,(mod-1)/(i&amp;lt;&amp;lt;1));
+		for(int j=2;j&amp;lt;i;j++){
+			pw[0][i+j]=1ll*pw[0][i+j-1]*pw[0][i+1]%mod;
+			pw[1][i+j]=1ll*pw[1][i+j-1]*pw[1][i+1]%mod;
+		}
+	}
+	return ;
+}
+void NTT(int *f,int lim,int opt){
+	for(int i=1;i&amp;lt;lim;i++)if(i&amp;lt;rev[i])swap(f[i],f[rev[i]]);
+	int op=(opt==-1),c=0;
+	for(int mid=1;mid&amp;lt;lim;mid&amp;lt;&amp;lt;=1,c++){
+		for(int j=0;j&amp;lt;lim;j+=(mid&amp;lt;&amp;lt;1)){
+			for(int k=0;k&amp;lt;mid;k++){
+				int u=f[j+k],v=1ll*f[j+k+mid]*pw[op][mid+k]%mod;
+				f[j+k]=add(u+v);
+				f[j+k+mid]=sub(u-v);
+			}
+		}
+	}
+	if(opt==1)return;
+	int inv=power(lim,mod-2);
+	for(int i=0;i&amp;lt;lim;i++)f[i]=1ll*f[i]*inv%mod;
 	return ;
 }
 &lt;/code&gt;&lt;/pre&gt;
