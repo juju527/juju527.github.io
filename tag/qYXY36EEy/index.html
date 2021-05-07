@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="因为失去，所以明白">
 <meta name="theme-color" content="#000">
-<title>2-SAT | juju527&#39;s blog</title>
+<title>juju527&#39;s blog</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1620381628305">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,6 @@
 
 
 
-  <meta name="description" content="2-SAT" />
-  <meta name="keywords" content="2-SAT,学习笔记" />
 </head>
 
 <body>
@@ -159,26 +157,10 @@
   <div class="main-continer">
     
     <div
-      class="section-layout pisces ">
+      class="section-layout  pisces">
       <div class="section-layout-wrapper">
-        
-
-<div class="sidebar">
-  
-    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
-      
-        <div class="post-list-sidebar">
-          <div class="sidebar-title">
-            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active language" data-lan="index">文章目录</span>
-            <span id="metaSideBar" class="sidebar-title-item language" data-lan="preview">站点概览</span>
-          </div>
-        </div>
-      
-      <div class="sidebar-body pisces" id="sidebar_body">
-        
-          
-            <div class="post-side-meta" id="post_side_meta">
-              
+        <div id="sidebarMeta" class="sidebar">
+    
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -230,854 +212,270 @@
 
 
 </div>
-            </div>
-            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
-              <div class="toc-box right-motion">
-  <div class="toc-wrapper auto-number auto"
-    id="toc_wrapper">
-    <ul class="markdownIt-TOC">
-<li><a href="#2-sat%E6%A8%A1%E6%9D%BF%E9%83%A8%E5%88%86">2-SAT模板部分</a>
-<ul>
-<li><a href="#%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F">强连通分量</a>
-<ul>
-<li><a href="#%E6%8B%86%E7%82%B9%E4%B8%8E%E5%BB%BA%E8%BE%B9">拆点与建边</a></li>
-<li><a href="#%E5%88%A4%E6%96%AD%E6%97%A0%E8%A7%A3%E4%B8%8E%E6%9E%84%E9%80%A0%E6%96%B9%E6%A1%88">判断无解与构造方案</a></li>
-</ul>
-</li>
-<li><a href="#%E7%BA%AFdfs%E5%86%992-sat">纯dfs写2-SAT</a>
-<ul>
-<li><a href="#%E6%8B%86%E7%82%B9%E4%B8%8E%E5%BB%BA%E8%BE%B9-2">拆点与建边</a></li>
-<li><a href="#%E5%AE%9E%E7%8E%B0">实现</a></li>
-<li><a href="#%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90">优缺点分析</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%BB%83%E4%B9%A0%E9%A2%98%E9%83%A8%E5%88%86">练习题部分</a><br>
-*
-<ul>
-<li><a href="#poi2011kon-conspiracy">[POI2011]KON-Conspiracy</a></li>
-<li><a href="#%E5%85%B6%E4%BB%96%E4%B9%A0%E9%A2%98">其他习题</a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
 </div>
-
 <script>
-
-  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
-  let active = 'active-show', activeClass = 'active-current';
-  let tocWrapper = document.querySelector('#toc_wrapper');
-  let tocContent = tocWrapper.children[0];
-  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
-
-  function addTocNumber(elem, deep) {
-    if (!elem) {
-      return;
-    }
-    let prop = elem.__proto__;
-
-    if (prop === HTMLUListElement.prototype) {
-      for (let i = 0; i < elem.children.length; i++) {
-        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+  let sidebarMeta = document.querySelector('#sidebarMeta');
+  let scheme = 'pisces';
+  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
+  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
+    document.addEventListener('scroll', function(e) {
+      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
+        sidebarWrapper.classList.add('home-sidebar-fixed')
+      } else {
+        sidebarWrapper.classList.remove('home-sidebar-fixed')
       }
-    } else if (prop === HTMLLIElement.prototype) {
-      // 保存li元素
-      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
-        lList.push(elem);
-      }
-      for (let i = 0; i < elem.children.length; i++) {
-        let cur = elem.children[i];
-        if (cur.__proto__ === HTMLAnchorElement.prototype) {
-          if (autoNumber) {
-            cur.text = deep + ' ' + cur.text;
-          }
-        } else if (cur.__proto__ === HTMLUListElement.prototype) {
-          addTocNumber(cur, deep);
-        }
-      }
-    }
-  }
-
-  function removeParentActiveClass() {
-    let parents = tocContent.querySelectorAll('.' + active)
-    parents.forEach(function (elem) {
-      elem.classList.remove(active);
     });
   }
-
-  function addActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.add(activeClass);
-    }
-  }
-
-  function removeActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.remove(activeClass);
-    }
-  }
-
-  function addActiveLiElemment(elem, parent) {
-    if (!elem || elem === parent) {
-      return;
-    } else {
-      if (elem.__proto__ === HTMLLIElement.prototype) {
-        elem.classList.add(active);
-      }
-      addActiveLiElemment(elem.parentElement, parent);
-    }
-  }
-
-  function showToc() {
-    if (tocWrapper) {
-      postBody = document.querySelector('#post_body');
-      for (let i = 0; i < postBody.children.length; i++) {
-        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
-          hList.push(postBody.children[i]);
-        }
-      }
-      if (tocWrapper.classList.contains('compress')) {
-        tocContent.classList.add('closed');
-      } else if (tocWrapper.classList.contains('no_compress')) {
-        tocContent.classList.add('expanded');
-      } else {
-        if (hList.length > 10) {
-          active = 'active-hidden'
-          tocContent.classList.add('closed');
-        } else {
-          tocContent.classList.add('expanded');
-        }
-      }
-    }
-  }
-
-  (function () {
-    // 处理不是从#一级标题开始目录
-    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
-      let con = tocContent.children[0].children[0];
-      tocContent.innerHTML = con.innerHTML;
-    }
-    let markdownItTOC = document.querySelector('.markdownIt-TOC');
-    let innerHeight = window.innerHeight;
-    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
-    addTocNumber(tocContent, '');
-  })();
-
-  document.addEventListener('scroll', function (e) {
-    if (lList.length <= 0) {
-      return;
-    }
-    let scrollTop = document.scrollingElement.scrollTop + 10;
-    let dir;
-
-    if (lastTop - scrollTop > 0) {
-      dir = 'up';
-    } else {
-      dir = 'down';
-    }
-
-    lastTop = scrollTop;
-    if (scrollTop <= 0) {
-      if (lastIndex >= 0 && lastIndex < hList.length) {
-        lList[lastIndex].classList.remove(activeClass);
-      }
-      return;
-    }
-
-    let current = 0, hasFind = false;
-    for (let i = 0; i < hList.length; i++) {
-      if (hList[i].offsetTop > scrollTop) {
-        current = i;
-        hasFind = true;
-        break;
-      }
-    }
-    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
-      current = hList.length - 1;
-    } else {
-      current--;
-    }
-    if (dir === 'down') {
-      if (current > lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex)
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    } else {
-      if (current < lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex);
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    }
-  });
-
-
-  window.addEventListener('load', function () {
-    showToc();
-    document.querySelector('#sidebar').style = 'display: block;';
-    tocWrapper.classList.add('toc-active');
-    setTimeout(function () {
-      if ("createEvent" in document) {
-        let evt = document.createEvent("HTMLEvents");
-        evt.initEvent("scroll", false, true);
-        document.dispatchEvent(evt);
-      }
-      else {
-        document.fireEvent("scroll");
-      }
-    }, 500)
-  })
-
-</script>
-            </div>
-          
-        
+  </script>
+        <div class="section-box tag-line box-shadow-wrapper">
+          <section class="section tags-section posts-expand bg-color">
+            <div class="padding-wrapper">
+  <div class="tag-timeline-box">
+    <div class="tag-timeline-wrapper">
+      <div class="tag-timeline-title">
+        <h2>
+          竞赛图
+          <small class="language" data-lan="tag">标签</small>
+        </h2>
       </div>
-    </div>
-  
-</div>
-<script>
-  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
-  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
-  const SLIDE_UP_IN = 'slide-up-in';
-
-  let sidebar = document.querySelector('#sidebar'),
-  tocSideBar = document.querySelector('#tocSideBar'),
-  metaSideBar = document.querySelector('#metaSideBar'),
-  postToc = document.querySelector('#post_toc'),
-  postSiteMeta = document.querySelector('#post_side_meta'),
-  sidebarTitle = document.querySelector('.sidebar-title'),
-  sidebarBody = document.querySelector('#sidebar_body');
-
-  tocSideBar && tocSideBar.addEventListener('click', (e) => {
-    toggleSidebar(e);
-  });
-
-  metaSideBar && metaSideBar.addEventListener('click', (e) => {
-    toggleSidebar(e);
-  });
-
-  function toggleSidebar(e) {
-    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
-    if (currentTitle == e.srcElement) {
-      return ;
-    }
-    let current, showElement, hideElement;
-    if (e.srcElement == metaSideBar) {
-      showElement = postSiteMeta;
-      hideElement = postToc;
-    } else if (e.srcElement == tocSideBar){
-      showElement = postToc;
-      hideElement = postSiteMeta;
-    }
-    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
-    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
-
-    window.Velocity(hideElement, 'stop');
-    window.Velocity(hideElement, 'transition.slideUpOut', {
-      display: 'none',
-      duration: 200,
-      complete: function () {
-        window.Velocity(showElement, 'transition.slideDownIn', {
-          duration: 200
-        });
-      }
-    })
-    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
-    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
-  }
-
-  postToc && postToc.addEventListener('transitionend', function() {
-    this.classList.remove(SLIDE_UP_IN);
-  });
-
-  if (sidebarBody) {
-    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
-      let hasFix = false;
-      let scrollEl = document.querySelector('.main-continer');
-      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
-      window.addEventListener('scroll', function(e) {
-        if (document.scrollingElement.scrollTop >= limitTop) {
-          if (!hasFix) {
-            sidebar.classList.add('sidebar-fixed');
-            hasFix = true;
-          }
-        } else {
-          if (hasFix) {
-            sidebar.classList.remove('sidebar-fixed');
-            hasFix = false;
-          }
-        }
-      });
-    }
-  }
-  
-</script>
-        <div class="section-box box-shadow-wrapper">
-          <div class="section bg-color post post-page">
-            <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://juju527.github.io/post/2-sat/">
-      2-SAT
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span>2020-06-06</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://juju527.github.io/tag/R5_8Aq_HE/">
-        <span>2-SAT</span>
-      </a>、
       
       
       
-      <a href="https://juju527.github.io/tag/8KLqOzsh1/">
-        <span>学习笔记</span>
+      <a href="https://juju527.github.io/post/jing-sai-tu-xue-xi-bi-ji/">
+        <div class="motion-warpper">
+          <div class="tag-post-node">
+            <h1>
+              05-06
+              <small>竞赛图学习笔记</small>
+            </h1>
+          </div>
+        </div>
       </a>
       
       
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>14<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>2879<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-    
-    
-    <span id="/post/2-sat/" data-flag-title="2-SAT" class="meta-item pc-show leancloud_visitors">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-eye"></i>
-      <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
-    </span>
-    
-  </div>
-</header>
-            <div class="post-body next-md-body" id="post_body">
-              <h1 id="2-sat模板部分">2-SAT模板部分</h1>
-<h2 id="强连通分量">强连通分量</h2>
-<p>upd on 11.6</p>
-<h3 id="拆点与建边">拆点与建边</h3>
-<p>将题目转化成一个图论问题<br>
-考虑将每一个变量拆成两个点，分别表示该位选0或1<br>
-<strong>具体实现可以用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>号点表示第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>位选0，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>+</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">i+n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>号点表示第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>位选1</strong><br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>+</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">i+n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>是一对相逆的命题<br>
-下述用“满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>”来叙述满足p点选择的意义<br>
-由于我们需要满足的操作形式为(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">X_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">X_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>)<br>
-“或”这个操作我们并不会处理，我们考虑将其转化为两个条件的“且”<br>
-(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">X_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">\neg a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">a</span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">X_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span><strong>一定</strong>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>)且(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">X_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">\neg b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">b</span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">X_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><strong>一定</strong>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>)<br>
-容易看出这两个条件的“与”与原要求条件等价<br>
-我们定义图中一条边<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u,v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>的意义为<strong>满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>时,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>一定满足</strong><br>
-那么我们根据上述分析可以建边</p>
-<blockquote>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi mathvariant="normal">¬</mi><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(\neg a,b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span><br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi mathvariant="normal">¬</mi><mi>b</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(\neg b,a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mclose">)</span></span></span></span></p>
-</blockquote>
-<h3 id="判断无解与构造方案">判断无解与构造方案</h3>
-<p>考虑一条边<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u,v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>的含义为选u必选v，那么u能走到v，即选u必选v<br>
-无解自然是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi><mo separator="true">,</mo><mi mathvariant="normal">¬</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">u,\neg u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">¬</span><span class="mord mathdefault">u</span></span></span></span> 互相可达，即其在同一连通块中<br>
-tarjan即可判断</p>
-<p>至于构造一组合法解<br>
-由于u能到v表示选u必选v，我们需要判断 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> 和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">\neg u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">u</span></span></span></span> 之间有没有到达关系<br>
-我们考虑tarjan的过程得到的强连通分量dfs序<br>
-其实质为反拓扑序<br>
-考虑拓扑序的性质，若u能走到v，则u的拓扑序一定在v之前<br>
-对于一个0/1变量u的取值我们只要钦定 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">\neg u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">u</span></span></span></span> 点中拓扑序较大的那个即可</p>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=1e6+5,maxm=1e6+5;
-struct Edge{
-	int to,nxt;
-}e[2*maxm];
-int cnt;
-int head[maxn&lt;&lt;1];
-int read(){
-    int x=0,y=1;
-    char ch=getchar();
-    while(ch&lt;48||ch&gt;57){if(ch==45)y=-1;ch=getchar();}
-    while(ch&gt;=48&amp;&amp;ch&lt;=57)x=(x&lt;&lt;3)+(x&lt;&lt;1)+(ch^48),ch=getchar();
-    return x*y;
-}
-void add(int u,int v){
-	e[cnt].to=v;
-	e[cnt].nxt=head[u];
-	head[u]=cnt++;
-	return ;
-}
-int dfsnum;
-int dfn[maxn&lt;&lt;1],low[maxn&lt;&lt;1];
-bool vis[maxn&lt;&lt;1];
-int num;
-int b[maxn&lt;&lt;1];
-stack&lt;int&gt;s;
-void tarjan(int x){
-	dfn[x]=low[x]=++dfsnum;
-	vis[x]=1;
-	s.push(x);
-	for(int i=head[x];i!=-1;i=e[i].nxt){
-		int tmp=e[i].to;
-		if(!dfn[tmp]){
-			tarjan(tmp);
-			low[x]=min(low[x],low[tmp]);
-		}
-		else if(vis[tmp])
-			low[x]=min(low[x],dfn[tmp]);
-	}
-	if(dfn[x]==low[x]){
-		num++;
-		while(s.top()^x){
-			b[s.top()]=num;
-			vis[s.top()]=0;
-			s.pop();
-		}
-		b[s.top()]=num;
-		vis[s.top()]=0;
-		s.pop();
-	}
-	return ;
-}
-int main(){
-//    freopen(&quot;P4782.in&quot;,&quot;r&quot;,stdin);
-//    freopen(&quot;P4782.out&quot;,&quot;w&quot;,stdout);
-   	int n,m;
-	n=read();m=read();
-	memset(head,-1,sizeof(head));
-	for(int i=1;i&lt;=m;i++){
-		int x,a,y,b;
-		x=read();a=read();y=read();b=read();
-		if(a&amp;&amp;b){
-			add(x,y+n);
-			add(y,x+n);
-		}
-		else if(a){
-			add(x,y);
-			add(y+n,x+n);
-		}
-		else if(b){
-			add(x+n,y+n);
-			add(y,x);
-		}
-		else{
-			add(x+n,y);
-			add(y+n,x);
-		}
-	}
-	for(int i=1;i&lt;=2*n;i++)
-		if(!dfn[i])
-			tarjan(i);
-	for(int i=1;i&lt;=n;i++)
-		if(b[i]==b[i+n]){
-			printf(&quot;IMPOSSIBLE\n&quot;);
-			return 0;
-		}
-	printf(&quot;POSSIBLE\n&quot;);
-	for(int i=1;i&lt;=n;i++)
-		printf(&quot;%d &quot;,b[i]&gt;b[i+n]);
-    return 0;
-}
-
-</code></pre>
-<h2 id="纯dfs写2-sat">纯dfs写2-SAT</h2>
-<p><strong>upd on 11.6 这个做法被洛谷一个老哥叉掉了，复杂度可能达到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，之前学的时候理解不深，非常抱歉</strong></p>
-<p>看到各位大佬都用的是强连通分量的算法，无论是tarjan还是kosaraju<br>
-这里给出一个不需要强连通分量的做法</p>
-<h3 id="拆点与建边-2">拆点与建边</h3>
-<p>将题目转化成一个图论问题<br>
-考虑将每一个变量拆成两个点，分别表示该位选0或1<br>
-<strong>具体实现可以用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>号点表示第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>位选0，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>+</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">i+n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>号点表示第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>位选1</strong><br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>+</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">i+n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>是一对相逆的命题<br>
-下述用“满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>”来叙述满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>点选择的意义<br>
-由于我们需要满足的操作形式为(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">X_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">X_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>)<br>
-“或”这个操作我们并不会处理，我们考虑将其转化为两个条件的“且”<br>
-(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">X_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">\neg a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">a</span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">X_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span><strong>一定</strong>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>)且(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">X_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">\neg b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">b</span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">X_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><strong>一定</strong>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>)<br>
-容易看出这两个条件的“与”与原要求条件等价<br>
-我们定义图中一条边<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u,v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>的意义为<strong>满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>时,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>一定满足</strong><br>
-那么我们根据上述分析可以建边</p>
-<blockquote>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi mathvariant="normal">¬</mi><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(\neg a,b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span><br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi mathvariant="normal">¬</mi><mi>b</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(\neg b,a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mclose">)</span></span></span></span></p>
-</blockquote>
-<h3 id="实现">实现</h3>
-<p>建好了图，但是图有什么用呢<br>
-由于我们需要构造一组解，我们考虑枚举每一个元素选<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mi mathvariant="normal">/</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">0/1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mord">/</span><span class="mord">1</span></span></span></span><br>
-从枚举点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>出发搜索<br>
-考虑到我们定义的边的意义，由于我们钦定<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>满足<br>
-故所有与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>相连的点都满足<br>
-容易推得<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>能走到的点都应满足<br>
-<strong>若此时<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>能走到的集合或之前枚举到能走到的集合中包括了某对点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>x</mi><mo>+</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">x,x+n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>,那么该方案一定无解</strong><br>
-原因是两个相逆的命题无法同时成立<br>
-这个应该很好理解<br>
-此时原问题一定无解吗？显然不是，我们还应考虑<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">\neg u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">u</span></span></span></span><br>
-<strong>当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">\neg u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">u</span></span></span></span>搜出来也无解时原问题无解</strong><br>
-是否还有其它无解情况？<br>
-再次考虑边的意义，一条有向边<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u,v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>,只有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>的决策能影响到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>,而无论<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>如何都无法影响<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span><br>
-这是由我们转化的两个条件所决定的，前者是后者的条件</p>
-<blockquote>
-<p>(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">X_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">\neg a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">a</span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">X_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span><strong>一定</strong>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>)且(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">X_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">¬</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">\neg b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">¬</span><span class="mord mathdefault">b</span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">X_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><strong>一定</strong>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>)<br>
-而我们对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>考虑了它所有能到达（影响）的点，不存在我们没考虑到的情况</p>
-</blockquote>
-<h3 id="优缺点分析">优缺点分析</h3>
-<p>相比强连通分量的做法，该做法的构造难度较小<br>
-<s>做法直接枚举<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mi mathvariant="normal">/</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">0/1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mord">/</span><span class="mord">1</span></span></span></span>当然难度小</s><br>
-复杂度也是线性</p>
-<hr>
-<p>说实话前面讲了一大堆奇奇怪怪的东西也许都还有问题<br>
-欢迎来卡</p>
-<hr>
-<h3 id="代码">代码</h3>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=1000005,maxm=1000005;
-struct Edge{
-	int to,nxt;
-}e[2*maxm];
-int cnt;
-int head[2*maxn];
-int n,m;
-bool flag[2*maxn];
-int tp=0;
-int s[2*maxn];
-int ans[maxn];
-int read(){
-	int x=0,y=1;
-	char ch=getchar();
-	while(ch&lt;'0'||ch&gt;'9'){if(ch=='-')y=-1;ch=getchar();}
-	while(ch&gt;='0'&amp;&amp;ch&lt;='9')x=(x&lt;&lt;3)+(x&lt;&lt;1)+(ch^48),ch=getchar();
-	return x*y;
-}
-void add(int u,int v){
-	e[cnt].to=v;
-	e[cnt].nxt=head[u];
-	head[u]=cnt++;
-	return ;
-}
-bool dfs(int x){
-	if(flag[x&gt;n?x-n:x+n])return 0;
-	if(flag[x])return 1;
-	flag[x]=1;
-	s[++tp]=x;
-	for(int i=head[x];i!=-1;i=e[i].nxt){
-		int tmp=e[i].to;
-		if(!dfs(tmp))return 0;
-	}
-	return 1;
-}
-int main(){
-	n=read();m=read();
-	memset(head,-1,sizeof(head));
-	for(int i=1;i&lt;=m;i++){
-		int u,a,v,b;
-		u=read();a=read();v=read();b=read();
-		if(a==0&amp;&amp;b==0){
-			add(u+n,v);
-			add(v+n,u);
-		}
-		else if(a==0&amp;&amp;b==1){
-			add(u+n,v+n);
-			add(v,u);
-		}
-		else if(a==1&amp;&amp;b==0){
-			add(u,v);
-			add(v+n,u+n);
-		}
-		else{
-			add(u,v+n);
-			add(v,u+n);
-		}
-	}
-	for(int i=1;i&lt;=n;i++){
-		tp=0;
-		ans[i]=0;
-		if(!dfs(i)){
-			while(tp)flag[s[tp--]]=0;
-			ans[i]=1;
-			if(!dfs(i+n)){
-				printf(&quot;IMPOSSIBLE\n&quot;);
-				return 0;
-			}
-		}
-	}
-	printf(&quot;POSSIBLE\n&quot;);
-	for(int i=1;i&lt;=n;i++)
-		printf(&quot;%d &quot;,ans[i]); 
-	return 0;
-}
-
-</code></pre>
-<h1 id="练习题部分">练习题部分</h1>
-<p>upd on 11.6<br>
-从模板的学习我们可以发现2-SAT的核心在于建图，这也是图论问题的普遍核心<br>
-发现题目中某元素的两种取值与两两间的限制就能将其转换成我们熟悉的2-SAT问题<br>
-当然，作为图论问题也会有一些更加复杂的拆点技巧，建边优化</p>
-<h3 id="poi2011kon-conspiracy"><a href="https://www.luogu.com.cn/problem/P3513">[POI2011]KON-Conspiracy</a></h3>
-<p>显然，本题的两种取值即后勤者与同谋者两种<br>
-若一个人要是后勤者，所有跟他不熟的人应均为同谋者<br>
-若一个人要是同谋者，所有跟他熟悉的人应均为后勤者<br>
-边数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> ，我们能够承受</p>
-<p>建出图后无解就容易判断了<br>
-考虑如何计算方案<br>
-<strong>构造一组合法解后看能否该边某人的阵营</strong>是我们的核心思路<br>
-容易发现，同阵营中不能同时将两人以上放入对方阵营<br>
-我们需要讨论的其实很少（这一个发现至关重要）<br>
-考虑把某个后勤者改为同谋者的合法条件<br>
-他要和同谋者阵营中的所有人均不认识，我们可以把他放入同谋者阵营<br>
-或者与同谋者阵营中唯一一人认识，且该人认识后勤者阵营所有人，我们可以把两人交换阵营<br>
-同谋改后勤类似<br>
-可以记录一个值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>u</mi><msub><mi>m</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">sum_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示i点在对方阵营的不满足条件点数<br>
-我们只要处理三种情况</p>
-<ol>
-<li>0点的直接改变</li>
-<li>0，0点之间的交换</li>
-<li>0，1点之间的交换</li>
-</ol>
-<pre><code class="language-cpp">#include&lt;cstdio&gt;
-#include&lt;iostream&gt;
-#include&lt;cstring&gt;
-#include&lt;cmath&gt;
-#include&lt;algorithm&gt;
-#include&lt;stack&gt;
-using namespace std;
-#define R register
-const int maxn=5005;
-struct Edge{
-    short to;
-    int nxt;
-}e[2*maxn*maxn];
-int cnt;
-int head[2*maxn];
-bool know[maxn][maxn];
-int tot;
-short id1[maxn],id2[maxn];
-bool c[maxn];
-short sum[maxn];
-short to[maxn];
-int read(){
-    int x=0,y=1;
-    char ch=getchar();
-    while(ch&lt;'0'||ch&gt;'9'){if(ch=='-')y=-1;ch=getchar();}
-    while(ch&gt;='0'&amp;&amp;ch&lt;='9')x=(x&lt;&lt;3)+(x&lt;&lt;1)+(ch^48),ch=getchar();
-    return x*y;
-}
-void add(int u,int v){
-//    cout&lt;&lt;&quot;*&quot;&lt;&lt;u&lt;&lt;&quot; &quot;&lt;&lt;v&lt;&lt;endl;
-    e[cnt].to=v;
-    e[cnt].nxt=head[u];
-    head[u]=cnt++;
-    return ;
-}
-int dfsnum;
-int dfn[2*maxn],low[2*maxn];
-bool vis[2*maxn];
-int num;
-int b[2*maxn];
-stack&lt;int&gt;s;
-inline void tarjan(int x){
-    dfn[x]=low[x]=++dfsnum;
-    vis[x]=1;
-    s.push(x);
-    for(int i=head[x];i!=-1;i=e[i].nxt){
-        int tmp=e[i].to;
-        if(!dfn[tmp]){
-            tarjan(tmp);
-            low[x]=min(low[x],low[tmp]);
-        }
-        else if(vis[tmp])
-            low[x]=min(low[x],dfn[tmp]);
-    }
-    if(dfn[x]==low[x]){
-        num++;
-        while(s.top()!=x){
-            b[s.top()]=num;
-            vis[s.top()]=0;
-            s.pop();
-        }
-        b[s.top()]=num;
-        vis[s.top()]=0;
-        s.pop();
-    }
-    return ;
-}
-int main(){
-    int n;
-    n=read();
-    memset(head,-1,sizeof(head));
-    for(R int i=1;i&lt;=n;i++){
-        int k;
-        k=read();
-        id1[i]=++tot;id2[i]=++tot;
-        for(R int j=1;j&lt;=k;j++)know[i][read()]=1;
-    }
-    for(R int i=1;i&lt;=n;i++){
-        for(R int j=i+1;j&lt;=n;j++){
-            if(know[i][j]){
-                add(id1[i],id2[j]);
-                add(id1[j],id2[i]);
-            }
-            else{
-                add(id2[i],id1[j]);
-                add(id2[j],id1[i]);
-            }
-        }
-    }
-    for(int i=1;i&lt;=tot;i++)
-        if(!dfn[i])
-            tarjan(i);
-    for(int i=1;i&lt;=n;i++)
-        if(b[id1[i]]==b[id2[i]]){
-            puts(&quot;0&quot;);
-            return 0;
-        }
-    int S=0;
-    for(int i=1;i&lt;=n;i++){c[i]=(b[id1[i]]&gt;b[id2[i]]);S+=c[i];}
-    for(R int i=1;i&lt;=n;i++){
-        for(R int j=1;j&lt;=n;j++){
-            if(c[j]==c[i])continue;
-            if(c[i]){if(know[i][j])sum[i]++,to[i]=j;}
-            else{if(!know[i][j])sum[i]++,to[i]=j;}
-        }
-    }
-    int ans=(S&lt;n&amp;&amp;S&gt;0),s0=0,s1=0;
-    for(R int i=1;i&lt;=n;i++){
-        if(sum[i]==1)if(sum[to[i]]==0)ans++;
-        if(sum[i]==0){
-            if(c[i]){
-                if(S&gt;1)ans++;
-                s1++;
-            }
-            else{
-                if(n-S&gt;1)ans++;
-                s0++;
-            }
-        }
-    }
-    printf(&quot;%d\n&quot;,ans+((S&gt;=1&amp;&amp;n-S&gt;=1)?s0*s1:0));
-    return 0;
-}
-</code></pre>
-<h3 id="其他习题">其他习题</h3>
-<p><a href="https://www.luogu.com.cn/problem/P3825">[NOI2017]游戏</a> 通过简单操作将少量3取值点变为2取值<br>
-<a href="https://www.luogu.com.cn/problem/P6378">[PA2010]Riddle</a> 优化建边2-SAT<br>
-<a href="https://www.luogu.com.cn/problem/UVA10319">Manhattan</a> 对2-SAT建边理解更加透彻</p>
-
-            </div>
-            
-            
-              <div class="post-footer">
-  <ul class="post-copyright">
-    <li class="post-copyright-author">
-      <strong class="language" data-lan="author">本文作者：</strong>
-      juju527
-    </li>
-    <li class="post-copyright-link">
-      <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://juju527.github.io/post/2-sat/" title="2-SAT">https://juju527.github.io/post/2-sat/</a>
-    </li>
-    <li class="post-copyright-license">
-      <strong class="language" data-lan="copyright">版权声明： </strong>
-      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-  <div class="tags">
-    
-      <a href="https://juju527.github.io/tag/R5_8Aq_HE/"># 2-SAT</a>
-    
-      <a href="https://juju527.github.io/tag/8KLqOzsh1/"># 学习笔记</a>
-    
-  </div>
-  <div class="nav">
-    <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="HNOI2020游记" href="https://juju527.github.io/post/hnoi2020-you-ji/">HNOI2020游记</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="HNOI2020游记" href="https://juju527.github.io/post/hnoi2020-you-ji/">上一篇</a>
       
-    </div>
-    <div class="nav-next">
       
-        <a class="nav-pc-next" title="【题解】 P4585 [FJOI2015]火星商店问题" href="https://juju527.github.io/post/ti-jie-p4585-fjoi2015huo-xing-shang-dian-wen-ti/">【题解】 P4585 [FJOI2015]火星商店问题</a>
-        <a class="nav-mobile-next" title="【题解】 P4585 [FJOI2015]火星商店问题" href="https://juju527.github.io/post/ti-jie-p4585-fjoi2015huo-xing-shang-dian-wen-ti/">下一篇</a>
-        <i class="fa fa-chevron-right"></i>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
     </div>
   </div>
 </div>
-            
-            
-  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
-<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
-
-<style>
-  .v .veditor {
-    min-height: 10rem;
-    background-image: url('');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: right;
-    background-color: rgba(255, 255, 255, 0);
-    resize: none;
-  }
-
-  .v .vwrap {
-    border: 1px solid #000 !important;
-  }
-
-  .v .vbtn {
-    padding: .4rem 1.2rem !important;
-    border-color: #fff !important;
-    background-color: #49b1f5 !important;
-    color: #fff !important;
-    font-size: .7rem !important;
-  }
-
-  .v .vcards .vcard .vh .vmeta .vat {
-    padding: 0 .8rem !important;
-    border: 1px solid #00c4b6 !important;
-    border-radius: 5px !important;
-    color: #00c4b6 !important;
-  }
-</style>
-<script>
-  new Valine({
-    el: '#vcomments',
-    appId: '4zwxITcFCKXAFtENijM1QS3j-gzGzoHsz',
-    appKey: 'nXcaY7lV1DDLrs3gP2jiGY40',
-    avatar: 'mp',
-    placeholder: '',
-    pageSize: '',
-    lang: 'zh-cn',
-    enableQQ: 'true' === 'false',
-    visitor: 'true' === 'true',
-    highlight: 'true' === 'true',
-    avatarForce: 'true' === 'false',
-  });
-</script>
-
-          </div>
+          </section>
         </div>
       </div>
     </div>
@@ -1271,253 +669,6 @@ int main(){
   }
 
 </script>
-    <div class="light-box" id="light_box"></div>
-<script>
-  let imgs = document.querySelectorAll('.post-body img');
-  let lightBox = document.querySelector('#light_box');
-  lightBox.addEventListener('mousedown', (e) => {
-    e.preventDefault()
-  })
-  lightBox.addEventListener('mousewheel', (e) => {
-    e.preventDefault()
-  })
-  let width = window.innerWidth * 0.8;
-  lightBox.onclick = () => {
-    let img = lightBox.querySelector('img');
-    lightBox.style = '';
-    img && img.remove();
-  }
-  imgs.forEach(item => {
-    item.onclick = function (e) {
-      let lightImg = document.createElement('img');
-      lightImg.src = this.src;
-      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
-      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
-      lightImg.onclick = function () {
-        lightBox.style = '';
-        this.remove();
-      }
-      lightBox.append(lightImg);
-    }
-  })
-</script>
-    <div class="reward-mask" style="display: none;">
-  <div class="reward-relative">
-    <span class="close" aria-hidden="true">x</span>
-    <div class="reward-body">
-      <h2>感谢您的支持，我会继续努力的!</h2>
-      <div class="reward-img-box">
-        <div style="position: relative; width: 140px; height: 140px;">
-          
-          
-          
-        </div>
-      </div>
-      <p class="reward-word">扫码打赏，你说多少就多少</p>
-      <p class="reward-tip">打开微信扫一扫，即可进行扫码打赏哦</p>
-    </div>
-    <div class="bottom">
-      
-      
-    </div>
-  </div>
-</div>
-<style>
-  .reward-mask {
-    position: fixed;
-    z-index: 99999;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #00000054;
-  }
-
-  .reward-relative {
-    position: relative;
-    width: 480px;
-    text-align: center;
-    margin: 0 auto;
-    border-radius: 5px;
-    background-color: #fff;
-    top: 50%;
-    margin-top: -205px;
-  }
-
-  .reward-relative .close {
-    position: absolute;
-    right: 10px;
-    font-weight: normal;
-    font-size: 16px;
-    color: #929292;
-  }
-
-  .reward-body {
-    padding: 40px 20px 20px;
-  }
-
-  .bottom {
-    display: flex;
-  }
-
-  .reward-btn {
-    text-align: center;
-  }
-
-  .reward-btn-text {
-    display: inline-block;
-    cursor: pointer;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 50%;
-    background-color: #ff9734;
-    color: #FFF;
-    margin-top: 20px;
-  }
-
-  .pay-text {
-    margin-top: 10px;
-    padding: 10px;
-    flex: 1;
-    transition: all .2s linear;
-  }
-
-  .pay-text:hover {
-    background-color: #a5a5a536;
-  }
-
-  .reward-body h2 {
-    padding-top: 10px;
-    text-align: center;
-    color: #a3a3a3;
-    font-size: 16px;
-    font-weight: normal;
-    margin: 0 0 20px;
-  }
-
-  .reward-body h2:after,
-  .reward-body h2:before {
-    font-family: Arial, Helvetica, sans-serif;
-    background: 0 0;
-    width: 0;
-    height: 0;
-    font-style: normal;
-    color: #eee;
-    font-size: 80px;
-    position: absolute;
-    top: 20px;
-  }
-
-  .reward-body h2:before {
-    content: '\201c';
-    left: 50px;
-  }
-
-  .reward-body h2:after {
-    content: '\201d';
-    right: 80px;
-  }
-
-  .reward-img-box {
-    display: inline-block;
-    padding: 10px;
-    border: 6px solid #ea5f00;
-    margin: 0 auto;
-    border-radius: 3px;
-    position: relative;
-  }
-
-  .reward-img {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-  }
-
-  @media (max-width: 767px) {
-    .reward-relative {
-      height: 100%;
-      top: 0px;
-      margin-top: 0;
-      width: auto;
-    }
-
-    .reward-relative .bottom {
-      flex-direction: column;
-    }
-
-    .reward-relative .pay-text {
-      width: 80%;
-      margin: 5px auto;
-      border: 1px solid silver;
-      padding: 6px;
-      border-radius: 4px;
-    }
-
-    .reward-body h2:after {
-      right: 40px;
-    }
-
-    .reward-body h2:after,
-    .reward-body h2:before {
-      font-size: 60px;
-    }
-
-    .reward-body h2:before {
-      left: 20px;
-    }
-  }
-</style>
-<script>
-  !function () {
-    var mask = document.querySelector('.reward-mask');
-    let close = document.querySelector('.reward-relative .close');
-    let rewardBtn = document.querySelector('.reward-btn');
-
-    let zfb = document.querySelector('#zfb'),
-      wx = document.querySelector('#wx'),
-      zfbBtn = document.querySelector('#zfbBtn'),
-      wxBtn = document.querySelector('#wxBtn');
-
-    if (zfbBtn && wxBtn) {
-      zfbBtn.addEventListener('click', () => {
-        window.Velocity(zfb, 'transition.slideLeftIn', {
-          duration: 400
-        });
-        window.Velocity(wx, 'transition.slideRightOut', {
-          display: 'none',
-          duration: 400
-        });
-      });
-
-      wxBtn.addEventListener('click', () => {
-        window.Velocity(wx, 'transition.slideRightIn', {
-          duration: 400
-        });
-        window.Velocity(zfb, 'transition.slideLeftOut', {
-          display: 'none',
-          duration: 400
-        });
-      });
-    }
-
-    rewardBtn.addEventListener('click', (e) => {
-      window.Velocity(mask, 'transition.slideDownIn', {
-        duration: 400
-      })
-    });
-
-    close.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.Velocity(mask, 'transition.slideUpOut', {
-        duration: 400
-      })
-    })
-  }()
-</script>
-
   </div>
 </body>
 
@@ -13371,6 +12522,7 @@ int main(){
     speed: 200
   });
 </script>
+
 
 
 
