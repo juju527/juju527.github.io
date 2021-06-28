@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="因为失去，所以明白">
 <meta name="theme-color" content="#000">
-<title>单调队列 | juju527&#39;s blog</title>
+<title>左偏树学习笔记 | juju527&#39;s blog</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1624870275455">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="单调队列" />
-  <meta name="keywords" content="单调队列,学习笔记" />
+  <meta name="description" content="左偏树学习笔记" />
+  <meta name="keywords" content="左偏树,学习笔记" />
 </head>
 
 <body>
@@ -238,15 +238,13 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li>
+<li><a href="#%E5%B7%A6%E5%81%8F%E6%A0%91">左偏树</a>
 <ul>
-<li>
+<li><a href="#%E5%AE%9E%E7%8E%B0">实现</a></li>
+<li><a href="#%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96">可持久化</a></li>
+<li><a href="#%E5%BA%94%E7%94%A8">应用</a>
 <ul>
-<li><a href="#%E4%BE%8B%E9%A2%981-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3">例题1 滑动窗口</a></li>
-<li><a href="#%E7%BB%83%E4%B9%A01-%E6%B1%82m%E5%8C%BA%E9%97%B4%E5%86%85%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC">练习1 求m区间内的最小值</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%982-%E5%88%87%E8%9B%8B%E7%B3%95">例题2 切蛋糕</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%983-%E8%89%AF%E5%A5%BD%E7%9A%84%E6%84%9F%E8%A7%89">例题3 良好的感觉</a></li>
-<li>[练习2 <a href="https://www.luogu.org/problem/P2564">[SCOI2009]生日礼物</a>](#练习2-scoi2009生日礼物)</li>
+<li><a href="#k%E7%9F%AD%E8%B7%AF">k短路</a></li>
 </ul>
 </li>
 </ul>
@@ -518,8 +516,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://juju527.github.io/post/dan-diao-dui-lie/">
-      单调队列
+    <a class="post-title-link" href="https://juju527.github.io/post/zuo-pian-shu-xue-xi-bi-ji/">
+      左偏树学习笔记
     </a>
   </h1>
   <div class="post-meta">
@@ -527,7 +525,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span>2020-04-19</span>
+      <span>2021-06-28</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -536,8 +534,8 @@
       <span class="pc-show language" data-lan="category-in">分类于</span>
       
       
-      <a href="https://juju527.github.io/tag/vCL2OLLOW/">
-        <span>单调队列</span>
+      <a href="https://juju527.github.io/tag/izt6QCF75/">
+        <span>左偏树</span>
       </a>、
       
       
@@ -552,17 +550,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>9<span class="language" data-lan="minute">分钟</span></span>
+      <span>3<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>1722<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>748<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/post/dan-diao-dui-lie/" data-flag-title="单调队列" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/zuo-pian-shu-xue-xi-bi-ji/" data-flag-title="左偏树学习笔记" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -571,281 +569,40 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <p><strong>what is it？</strong><br>
-这是一个神奇的数据结构<br>
-我们从一道例题来看看单调队列的强大</p>
-<h4 id="例题1-滑动窗口">例题1 <a href="https://www.luogu.org/problem/P1886">滑动窗口</a></h4>
-<p>这是一类经典题型<strong>滑动窗口</strong><br>
-区间找最值我们可能想到ST表RMQ这样的算法<br>
-但一般滑动窗口的题目n都特别大<br>
-而ST表要用到二维的数组，空间无法承受<br>
-单调队列闪亮登场</p>
-<hr>
-<p><strong>前备知识</strong><br>
-我们可以用c++自带的STL<strong>双端队列</strong>deque来实现<br>
-当然也可以手动模拟<br>
-双端队列顾名思义可以在队列的两端操作(back,front)<br>
-与队列相似</p>
+              <h2 id="左偏树">左偏树</h2>
+<p>左偏树是一种二叉的可并堆，故名思意，左偏树左边的节点多于右边节点</p>
+<h3 id="实现">实现</h3>
+<p>对于堆中的每一个节点，维护一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span> 值，定义为其往子树走最少多少步走到空节点</p>
+<p>我们希望维护出来的堆一直往右走就能最快走到空</p>
+<p>左偏树最核心的操作是“合并”</p>
+<p>考虑合并两个大小分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo separator="true">,</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">n,m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span></span></span></span> 的堆 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x,y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span></p>
+<p>取出一个更优的点，不妨是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>,将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的右儿子和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 递归合并</p>
+<p>由于合并时一直在往右走，复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>+</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(logn+logm)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></p>
+<p>插入操作可视为堆与一个单独节点合并，删除堆顶可视为将堆顶左右儿子合并</p>
+<p>值得一提的是，左偏树支持打懒标记（全体加/乘）</p>
+<h3 id="可持久化">可持久化</h3>
+<p>左偏树支持可持久化，类似线段树合并，合并过程不断新建节点即可</p>
+<p>若最初总共有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个节点，考虑合并两个大小分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>s</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">s_1,s_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的左偏树</p>
+<p>其遍历节点数至多为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><msub><mi>s</mi><mn>1</mn></msub><mo>+</mo><mi>l</mi><mi>o</mi><mi>g</mi><msub><mi>s</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">logs_1+logs_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，最多合并 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 次，时空复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(nlogn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+<h3 id="应用">应用</h3>
+<h4 id="k短路">k短路</h4>
 <blockquote>
-<p>q.push_back(x);//在队尾插入元素<br>
-q.push_front(x);//在队首插入元素<br>
-q.pop_back(x);//在队尾删除元素<br>
-q.pop_front(x);//在队首删除元素</p>
+<p>求s到t的第k短路</p>
 </blockquote>
-<hr>
-<p>从这道题来说我们只要管一个大小为k的区间内最值即可<br>
-我们可以用双端队列来实现单调队列</p>
-<p>以求最小值为例<br>
-枚举每一个区间的右端点<br>
-在我们之前维护好的单调队列中做以下操作来维护</p>
-<ol>
-<li>比较单调队列中的队尾元素与我们枚举到的i点数值大小<br>
-若i点数值小等于队尾我们直接把队尾弹出并重复这一步操作即可</li>
-<li>将该点放入队尾</li>
-<li>输出时比较队首在原数列中的位置是不是在i点前k个以内<br>
-不是弹出即可</li>
-</ol>
-<pre><code class="language-cpp">for(int i=1;i&lt;=n;i++){
-		while((!q1.empty())&amp;&amp;q1.back().data&gt;=a[i])
-			q1.pop_back();
-		node u;
-		u.id=i;u.data=a[i];
-		q1.push_back(u);
-		while(q1.front().id+k-1&lt;i)
-			q1.pop_front();
-		if(i&gt;=k)
-			printf(&quot;%d &quot;,q1.front().data);
-	}
-</code></pre>
-<p>第1步的理由:<br>
-在队列中先入队的编号一定比i小，若数值还比a[i]大<br>
-那最小值一定不是它，并且之后的位置它也会比i先出队<br>
-简单来说<br>
-有些巨佬比你小还比你强，<s>你怎么赢ta？</s><br>
-<strong>代码</strong></p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=1000005;
-struct node{
-	int id,data;
-};
-int n,k;
-int a[maxn];
-deque&lt;node&gt;q1,q2;
-void work(){
-	for(int i=1;i&lt;=n;i++){
-		while((!q1.empty())&amp;&amp;q1.back().data&gt;=a[i])
-			q1.pop_back();
-		node u;
-		u.id=i;u.data=a[i];
-		q1.push_back(u);
-		while(q1.front().id+k-1&lt;i)
-			q1.pop_front();
-		if(i&gt;=k)
-			printf(&quot;%d &quot;,q1.front().data);
-	}
-	printf(&quot;\n&quot;);
-	for(int i=1;i&lt;=n;i++){
-		while((!q2.empty())&amp;&amp;q2.back().data&lt;=a[i])
-			q2.pop_back();
-		node u;
-		u.id=i;u.data=a[i];
-		q2.push_back(u);
-		while(q2.front().id+k-1&lt;i)
-			q2.pop_front();
-		if(i&gt;=k)
-			printf(&quot;%d &quot;,q2.front().data);
-	}
-}
-int main()
-{
-	scanf(&quot;%d%d&quot;,&amp;n,&amp;k);
-	for(int i=1;i&lt;=n;i++)
-		scanf(&quot;%d&quot;,&amp;a[i]);
-	work();
-	return 0;
-}
-</code></pre>
-<blockquote>
-<p>从这里我们应该可以看出为什么叫单调队列了<br>
-它不仅维护了data的单调性还维护了编号的单调性</p>
-</blockquote>
-<h4 id="练习1-求m区间内的最小值">练习1 <a href="https://www.luogu.org/problem/P1440">求m区间内的最小值</a></h4>
-<p>注意此题为左闭右开区间</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=2000005;
-struct node{
-	int id,data;
-};
-int a[maxn];
-deque&lt;node&gt;q;
-int main()
-{
-	int n,m;
-	scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-	for(int i=1;i&lt;=n;i++)
-		scanf(&quot;%d&quot;,&amp;a[i]);
-	for(int i=1;i&lt;=m;i++){
-		if(q.empty())printf(&quot;0\n&quot;);
-		else printf(&quot;%d\n&quot;,q.front().data);
-		while((!q.empty())&amp;&amp;q.back().data&gt;=a[i])
-			q.pop_back();
-		node u;
-		u.id=i;u.data=a[i];
-		q.push_back(u);
-	}
-	//特殊考虑前m个
-	for(int i=m+1;i&lt;=n;i++){
-		printf(&quot;%d\n&quot;,q.front().data);
-		while((!q.empty())&amp;&amp;q.back().data&gt;=a[i])
-			q.pop_back();
-		node u;
-		u.id=i;u.data=a[i];
-		q.push_back(u);
-		while(q.front().id+m-1&lt;i)
-			q.pop_front();
-	}
-	return 0;
-}
-</code></pre>
-<h4 id="例题2-切蛋糕">例题2 <a href="https://www.luogu.org/problem/P1714">切蛋糕</a></h4>
-<p>这道题没有固定的区间长度，只有最多m块的限制<br>
-由于我们要求的是区间最大和<br>
-我们可以考虑前缀和<br>
-将前缀和放到单调队列中维护最小值<br>
-同样是枚举区间右端点减去单调队列维护的最小前缀和就能得到区间最大和了<br>
-<strong>代码</strong></p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=500005;
-struct node{
-	int id,data;
-};
-int c[maxn];
-deque&lt;node&gt;q;
-int ans=0;
-int main()
-{
-	int n,m;
-	scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-	for(int i=1;i&lt;=n;i++){
-		int x;
-		scanf(&quot;%d&quot;,&amp;x);
-		c[i]=c[i-1]+x;
-	}
-	for(int i=1;i&lt;=n;i++){
-		while((!q.empty())&amp;&amp;q.back().data&gt;=c[i])
-			q.pop_back();
-		node u;
-		u.id=i;u.data=c[i];
-		q.push_back(u);
-		while(q.front().id+m-1&lt;i)
-			q.pop_front();
-		ans=max(ans,c[i]-q.front().data);
-	}
-	printf(&quot;%d&quot;,ans);
-	return 0;
-}
-</code></pre>
-<h4 id="例题3-良好的感觉">例题3 <a href="https://www.luogu.org/problem/P2422">良好的感觉</a></h4>
-<p>这道题的区间范围更加混乱了，整个在放飞自我<br>
-由于我们这个区间的舒适程度只与区间内最小元素和元素和有关<br>
-而区间元素越多区间元素和可能更优<br>
-那我们以每个点为所在区间的最小值找到这个最大区间不就解决问题了吗<br>
-怎么快速找到以i点值为最小值的最大区间呢<br>
-自然是在两边找到了比i值更小的值，这个区间就无法更大了</p>
-<p><strong>注意</strong> 我们要维护的比i值更小的值是从i ~ 1和从i ~ n第一个比i小的</p>
-<p><strong>代码</strong></p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=100005;
-struct node{
-	int id,data;
-};
-int x[maxn];
-long long c[maxn];
-int l[maxn],r[maxn];
-long long ans=0;
-deque&lt;node&gt;q;
-int main()
-{
-	int n;
-	scanf(&quot;%d&quot;,&amp;n);
-	for(int i=1;i&lt;=n;i++){
-		scanf(&quot;%d&quot;,&amp;x[i]);
-		c[i]=c[i-1]+x[i];
-	}
-	for(int i=1;i&lt;=n;i++){
-		while((!q.empty())&amp;&amp;q.back().data&gt;=x[i])
-			q.pop_back();
-		if(q.empty())l[i]=0;
-		else l[i]=q.back().id;//利用了单调队列编号的单调性
-		//这个队尾的值没被弹掉说明它比x[i]小，且在x[i]之前入队
-		node u;
-		u.id=i;u.data=x[i];
-		q.push_back(u);
-	}
-	q.clear();
-	for(int i=n;i&gt;=1;i--){
-		while((!q.empty())&amp;&amp;q.back().data&gt;=x[i])
-			q.pop_back();
-		if(q.empty())r[i]=n+1;
-		else r[i]=q.back().id;
-		//同上
-		node u;
-		u.id=i;u.data=x[i];
-		q.push_back(u);
-	}
-	for(int i=1;i&lt;=n;i++)
-		ans=max(ans,(c[r[i]-1]-c[l[i]])*x[i]);
-	printf(&quot;%lld&quot;,ans);
-	return 0;
-}
-</code></pre>
-<h4 id="练习2-scoi2009生日礼物">练习2 <a href="https://www.luogu.org/problem/P2564">[SCOI2009]生日礼物</a></h4>
-<p><strong>代码</strong></p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=1000005,maxk=65,inf=0x3f3f3f3f;
-struct node{
-	int id,data;
-	bool operator &lt;(node i)const{
-		return id&lt;i.id;
-	}
-}a[maxn];
-int len=0,cnt=0;
-int ans=inf;
-int pos[maxk];
-deque&lt;node&gt;q;
-int main()
-{
-	int n,k;
-	scanf(&quot;%d%d&quot;,&amp;n,&amp;k);
-	for(int i=1;i&lt;=k;i++){
-		int t;
-		scanf(&quot;%d&quot;,&amp;t);
-		for(int j=1;j&lt;=t;j++){
-			int x;
-			scanf(&quot;%d&quot;,&amp;x);
-			++len;
-			a[len].id=x;a[len].data=i;
-		}
-	}
-	sort(a+1,a+len+1);
-	for(int i=1;i&lt;=len;i++){
-		if(!pos[a[i].data])cnt++;
-		pos[a[i].data]=a[i].id;
-		q.push_back(a[i]);
-		while((!q.empty())&amp;&amp;q.front().id!=pos[q.front().data])
-			q.pop_front();
-		if(cnt==k)ans=min(ans,a[i].id-q.front().id);
-	}
-	printf(&quot;%d&quot;,ans);
-	return 0;
-}
-
-</code></pre>
+<p>考虑先跑出反图上t点的最短路树 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>，复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>m</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(mlogm)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></p>
+<p>考虑一条s到t的路径边集 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>，记去除 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 上的边后的边集为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">P&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">P&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> 中相邻的两条边 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>e</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">e_1,e_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 一定满足 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">e_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的起点在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">e_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 终点到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> 的链上</p>
+<p>显然，不同的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">P&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> 对应了不同的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>，我们考虑维护 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">P&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> 即可</p>
+<p>对于已有的一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">P&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>，我们通过增加新边/替换最后一条边得到权值略大的集合 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></mrow><annotation encoding="application/x-tex">P&#x27;&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>增加新边相当于我们要找到最小的一条以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">P&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> 中最后一条边的终点到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> 的链上的一个点为起点的<strong>非树边</strong></p>
+<p>替换边相当于我们要找到次小的一条以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">P&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> 中倒数第二条边的终点到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> 的链上的一个点为起点的<strong>非树边</strong></p>
+<p>我们考虑维护堆 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">H(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>，储存点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> 的链上的点为起点的非树边</p>
+<p>显然我们不能暴力维护它，复杂度将达到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>m</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(nmlogm)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></p>
+<p>发现 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">H(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi><mo>(</mo><mi>f</mi><msub><mi>a</mi><mi>x</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">H(fa_x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 有大量重合，我们维护一个可持久化堆即可，复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>m</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(mlogm)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></p>
+<p>显然，上面提到的操作当我们维护出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">H(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span> 就已经迎刃而解了</p>
+<p>总复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>+</mo><mi>m</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>m</mi><mo>+</mo><mi>k</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(nlogn+mlogm+klogk)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span></p>
+<p>通过斐波那契堆优化最短路+维护堆套堆可以做到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>+</mo><mi>m</mi><mo>+</mo><mi>k</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(nlogn+m+klogk)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span></p>
+<p><a href="https://www.luogu.com.cn/paste/1twdfo9a">code</a></p>
 
             </div>
             
@@ -858,7 +615,7 @@ int main()
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://juju527.github.io/post/dan-diao-dui-lie/" title="单调队列">https://juju527.github.io/post/dan-diao-dui-lie/</a>
+      <a href="https://juju527.github.io/post/zuo-pian-shu-xue-xi-bi-ji/" title="左偏树学习笔记">https://juju527.github.io/post/zuo-pian-shu-xue-xi-bi-ji/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -867,7 +624,7 @@ int main()
   </ul>
   <div class="tags">
     
-      <a href="https://juju527.github.io/tag/vCL2OLLOW/"># 单调队列</a>
+      <a href="https://juju527.github.io/tag/izt6QCF75/"># 左偏树</a>
     
       <a href="https://juju527.github.io/tag/8KLqOzsh1/"># 学习笔记</a>
     
@@ -877,6 +634,10 @@ int main()
       
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="重量平衡树学习笔记" href="https://juju527.github.io/post/chong-liang-ping-heng-shu/">重量平衡树学习笔记</a>
+        <a class="nav-mobile-next" title="重量平衡树学习笔记" href="https://juju527.github.io/post/chong-liang-ping-heng-shu/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
