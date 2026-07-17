@@ -17,40 +17,12 @@ export interface ProfileData {
 
 export const profileData = {
   introduction: [
-    "This is Tianyi Zhu’s personal website and technical blog.",
-    "It is a place for technical articles, project notes, and learning records.",
+    "An OIer from Yali Middle School",
+    "An ACMer from Shanghai Jiao Tong University",
+    "An undergraduate from SJTU ACM Class 2025.",
+    "It is a place for learning records and personal essays.",
   ],
-  technicalInterests: [
-    {
-      title: "Algorithms",
-      description: "Problem solving, data structures, and careful analysis.",
-    },
-    {
-      title: "Systems",
-      description: "Software internals, tools, and dependable implementation.",
-    },
-    {
-      title: "Distributed Computing",
-      description: "Coordination, consistency, and systems that span machines.",
-    },
-    {
-      title: "C++ / Go",
-      description: "Practical engineering notes using C++ and Go.",
-    },
-  ],
+  technicalInterests: [],
   currentLearning: [],
-  todos: [
-    {
-      section: "Introduction",
-      task: "Replace the short site-level introduction with a user-written biography.",
-    },
-    {
-      section: "Current learning",
-      task: "Add the topics currently being studied and why they matter.",
-    },
-    {
-      section: "Contact",
-      task: "Add a public email address or additional social profiles, if desired.",
-    },
-  ],
+  todos: [],
 } satisfies ProfileData;

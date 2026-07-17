@@ -28,6 +28,7 @@
 
   --content-width: 72rem;
   --reading-width: 46rem;
+  --article-width: 50rem;
   --page-gutter: clamp(1rem, 4vw, 2rem);
   --header-height: 4.5rem;
   --footer-height: 5rem;

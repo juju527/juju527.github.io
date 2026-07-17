@@ -2,7 +2,7 @@
 interface Props {
   eyebrow: string;
   title: string;
-  description: string;
+  description?: string;
 }
 
 const { eyebrow, title, description } = Astro.props;
@@ -11,7 +11,7 @@ const { eyebrow, title, description } = Astro.props;
 <header class="page-header">
   <p>{eyebrow}</p>
   <h1>{title}</h1>
-  <p>{description}</p>
+  {description && <p class="page-header__description">{description}</p>}
 </header>
 
 <style>
@@ -33,7 +33,7 @@ const { eyebrow, title, description } = Astro.props;
     letter-spacing: -0.035em;
   }
 
-  .page-header > p:last-child {
+  .page-header__description {
     color: var(--color-text-muted);
   }
 </style>

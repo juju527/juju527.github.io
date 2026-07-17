@@ -5,47 +5,16 @@ import { profileData } from "../../data/profile";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="About" description={`About ${siteConfig.name}, technical interests, and contact links.`}>
+<BaseLayout title="About" description={`About ${siteConfig.name}, with an introduction and contact links.`}>
   <PageHeader
     eyebrow="About"
     title={siteConfig.name}
-    description="A concise, maintainable profile using only information currently verified in this repository."
   />
 
   <div class="about-sections">
     <section aria-labelledby="introduction-title">
       <h2 id="introduction-title">Introduction</h2>
       {profileData.introduction.map((paragraph) => <p>{paragraph}</p>)}
-    </section>
-
-    <section aria-labelledby="interests-title">
-      <h2 id="interests-title">Technical interests</h2>
-      <ul class="interest-list">
-        {
-          profileData.technicalInterests.map((interest) => (
-            <li>
-              <h3>{interest.title}</h3>
-              <p>{interest.description}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section aria-labelledby="learning-title">
-      <h2 id="learning-title">Current learning direction</h2>
-      {
-        profileData.currentLearning.length > 0 ? (
-          <ul>
-            {profileData.currentLearning.map((topic) => <li>{topic}</li>)}
-          </ul>
-        ) : (
-          <p class="missing-content">
-            Current learning topics have not been provided yet. The required update is listed in
-            the content TODO section below.
-          </p>
-        )
-      }
     </section>
 
     <section aria-labelledby="contact-title">
@@ -60,22 +29,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           ))
         }
       </ul>
-    </section>
-
-    <section class="todo-section" aria-labelledby="todo-title">
-      <p class="todo-section__label">User input required</p>
-      <h2 id="todo-title">Content TODO</h2>
-      <p>These items need information from Tianyi Zhu before the profile can be expanded.</p>
-      <dl>
-        {
-          profileData.todos.map((todo) => (
-            <div>
-              <dt>{todo.section}</dt>
-              <dd>TODO: {todo.task}</dd>
-            </div>
-          ))
-        }
-      </dl>
     </section>
   </div>
 </BaseLayout>
@@ -94,40 +47,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     font-size: var(--font-size-xl);
   }
 
-  .interest-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .interest-list li {
-    padding: var(--space-4);
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-  }
-
-  .interest-list h3 {
-    margin-bottom: var(--space-2);
-    font-size: var(--font-size-base);
-  }
-
-  .interest-list p {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-  }
-
-  .missing-content {
-    padding: var(--space-4);
-    border-inline-start: 3px solid var(--color-border-strong);
-    color: var(--color-text-muted);
-    background: var(--color-surface-muted);
-  }
-
   .contact-list {
     display: flex;
     flex-wrap: wrap;
@@ -139,53 +58,5 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   .contact-list a {
     font-weight: 700;
-  }
-
-  .todo-section {
-    padding: var(--space-5);
-    border: var(--border-width) dashed var(--color-border-strong);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-  }
-
-  .todo-section__label {
-    margin-bottom: var(--space-2);
-    color: var(--color-accent);
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .todo-section dl {
-    display: grid;
-    gap: var(--space-3);
-    margin: var(--space-5) 0 0;
-  }
-
-  .todo-section dl div {
-    display: grid;
-    grid-template-columns: 7rem minmax(0, 1fr);
-    gap: var(--space-4);
-  }
-
-  .todo-section dt {
-    font-weight: 700;
-  }
-
-  .todo-section dd {
-    margin: 0;
-    color: var(--color-text-muted);
-  }
-
-  @media (max-width: 36rem) {
-    .interest-list {
-      grid-template-columns: 1fr;
-    }
-
-    .todo-section dl div {
-      grid-template-columns: 1fr;
-      gap: var(--space-1);
-    }
   }
 </style>

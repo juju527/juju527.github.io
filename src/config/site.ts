@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Tianyi Zhu",
   description:
-    "A personal website and technical blog about algorithms, systems, and software engineering.",
+    "Personal blog of juju527",
   url: "https://juju527.github.io",
   language: "en",
   feed: {
@@ -14,5 +14,8 @@ export const siteConfig = {
     { label: "Projects", href: "/projects/" },
     { label: "About", href: "/about/" },
   ],
-  socialLinks: [{ label: "GitHub", href: "https://github.com/juju527" }],
+  socialLinks: [
+    { label: "GitHub", href: "https://github.com/juju527" },
+    { label: "Email", href: "mailto:juju527@sjtu.edu.cn"}
+  ],
 } as const;

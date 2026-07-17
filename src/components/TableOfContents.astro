@@ -3,10 +3,30 @@ import type { MarkdownHeading } from "astro";
 
 interface Props {
   headings: MarkdownHeading[];
+  renderedHtml?: string;
 }
 
-const { headings } = Astro.props;
+const { headings, renderedHtml = "" } = Astro.props;
 const visibleHeadings = headings.filter(({ depth }) => depth >= 2 && depth <= 4);
+
+function getRenderedHeadingLabels(html: string): Map<string, string> {
+  const labels = new Map<string, string>();
+  const headingPattern = /<h([2-4])\b[^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/h\1>/g;
+  const headingAnchorPattern =
+    /<a\b[^>]*class="heading-anchor"[^>]*>[\s\S]*?<\/a>\s*$/;
+
+  for (const match of html.matchAll(headingPattern)) {
+    const [, , slug, label] = match;
+
+    if (slug && label) {
+      labels.set(slug, label.replace(headingAnchorPattern, ""));
+    }
+  }
+
+  return labels;
+}
+
+const renderedHeadingLabels = getRenderedHeadingLabels(renderedHtml);
 ---
 
 {
@@ -16,7 +36,15 @@ const visibleHeadings = headings.filter(({ depth }) => depth >= 2 && depth <= 4)
       <ol>
         {visibleHeadings.map((heading) => (
           <li class={`toc__depth-${heading.depth}`}>
-            <a href={`#${heading.slug}`}>{heading.text}</a>
+            <a href={`#${heading.slug}`}>
+              {
+                renderedHeadingLabels.has(heading.slug) ? (
+                  <Fragment set:html={renderedHeadingLabels.get(heading.slug)} />
+                ) : (
+                  heading.text
+                )
+              }
+            </a>
           </li>
         ))}
       </ol>
@@ -72,5 +100,9 @@ const visibleHeadings = headings.filter(({ depth }) => depth >= 2 && depth <= 4)
     color: var(--color-accent-hover);
     text-decoration: underline;
     text-underline-offset: 0.18em;
+  }
+
+  .toc :global(.katex) {
+    font-size: 1em;
   }
 </style>

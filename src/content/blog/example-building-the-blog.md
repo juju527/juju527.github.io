@@ -7,7 +7,7 @@ tags:
   - Astro
   - Example
 category: "Site Notes"
-draft: false
+draft: true
 featured: false
 ---
 

@@ -8,6 +8,10 @@ import remarkMath from "remark-math";
 export default defineConfig({
   site: "https://juju527.github.io",
   output: "static",
+  image: {
+    layout: "constrained",
+    responsiveStyles: true,
+  },
   integrations: [
     sitemap({
       filter: (page) => {
