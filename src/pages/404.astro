@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The requested page could not be found."
+  canonical={false}
+  noindex
+>
+  <section class="not-found" aria-labelledby="not-found-title">
+    <p class="not-found__code">404</p>
+    <h1 id="not-found-title">Page not found</h1>
+    <p>The address may be incorrect, or the page may have moved.</p>
+    <nav aria-label="Continue browsing">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/archive/">Archive</a></li>
+      </ul>
+    </nav>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    max-width: 38rem;
+  }
+
+  .not-found__code {
+    margin-bottom: var(--space-3);
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .not-found h1 {
+    font-size: var(--font-size-2xl);
+    letter-spacing: -0.035em;
+  }
+
+  .not-found > p:not(.not-found__code) {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+  }
+
+  .not-found ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .not-found a {
+    display: block;
+    padding: var(--space-2) var(--space-4);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .not-found a:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent-hover);
+    background: var(--color-surface-muted);
+  }
+</style>

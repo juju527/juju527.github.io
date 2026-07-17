@@ -1,0 +1,203 @@
+---
+import { render } from "astro:content";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TableOfContents from "../../components/TableOfContents.astro";
+import {
+  formatPostDate,
+  getVisiblePosts,
+  type BlogPost,
+} from "../../lib/posts";
+import "katex/dist/katex.min.css";
+import "../../styles/prose.css";
+
+export async function getStaticPaths() {
+  const posts = await getVisiblePosts();
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const hasTableOfContents = headings.some(({ depth }) => depth >= 2 && depth <= 4);
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  seoType="article"
+  published={post.data.published}
+  updated={post.data.updated}
+  tags={post.data.tags}
+  wide
+>
+  <article class="post">
+    <a class="post__back" href="/blog/">&larr; All articles</a>
+    <header class="post__header">
+      {post.data.draft && <p class="post__draft">Draft example</p>}
+      <h1>{post.data.title}</h1>
+      <p class="post__description">{post.data.description}</p>
+      <dl class="post__dates">
+        <div>
+          <dt>Published</dt>
+          <dd>
+            <time datetime={post.data.published.toISOString()}>
+              {formatPostDate(post.data.published)}
+            </time>
+          </dd>
+        </div>
+        {
+          post.data.updated && (
+            <div>
+              <dt>Updated</dt>
+              <dd>
+                <time datetime={post.data.updated.toISOString()}>
+                  {formatPostDate(post.data.updated)}
+                </time>
+              </dd>
+            </div>
+          )
+        }
+        <div>
+          <dt>Category</dt>
+          <dd>{post.data.category}</dd>
+        </div>
+      </dl>
+      <ul class="post__tags" aria-label="Article tags">
+        {post.data.tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+    </header>
+    {
+      hasTableOfContents && (
+        <aside class="post__toc">
+          <TableOfContents headings={headings} />
+        </aside>
+      )
+    }
+    <div class="post__content prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    display: grid;
+    grid-template-areas:
+      "back back"
+      "header toc"
+      "content toc";
+    grid-template-columns: minmax(0, var(--reading-width)) minmax(13rem, 16rem);
+    column-gap: var(--space-8);
+    justify-content: center;
+  }
+
+  .post__back {
+    grid-area: back;
+    justify-self: start;
+    display: inline-block;
+    margin-bottom: var(--space-7);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+  }
+
+  .post__header {
+    grid-area: header;
+    padding-bottom: var(--space-7);
+    border-bottom: var(--border-width) solid var(--color-border);
+  }
+
+  .post__draft {
+    display: inline-block;
+    margin-bottom: var(--space-3);
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .post h1 {
+    font-size: var(--font-size-2xl);
+    letter-spacing: -0.035em;
+  }
+
+  .post__description {
+    margin-bottom: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+  }
+
+  .post__dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    margin: 0 0 var(--space-4);
+  }
+
+  .post__dates div {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .post__dates dt {
+    color: var(--color-text-muted);
+  }
+
+  .post__dates dd {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .post__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post__tags li {
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+  }
+
+  .post__content {
+    grid-area: content;
+    min-width: 0;
+    padding-top: var(--space-7);
+  }
+
+  .post__toc {
+    position: sticky;
+    grid-area: toc;
+    align-self: start;
+    top: var(--space-5);
+  }
+
+  @media (max-width: 64rem) {
+    .post {
+      display: block;
+      max-width: var(--reading-width);
+      margin-inline: auto;
+    }
+
+    .post__toc {
+      position: static;
+      margin-top: var(--space-6);
+    }
+  }
+</style>

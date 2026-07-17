@@ -1,0 +1,82 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Seo from "../components/Seo.astro";
+import { siteConfig } from "../config/site";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  wide?: boolean;
+  canonical?: string | URL | false;
+  seoType?: "website" | "article";
+  published?: Date;
+  updated?: Date;
+  tags?: readonly string[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  wide = false,
+  canonical,
+  seoType = "website",
+  published,
+  updated,
+  tags,
+  noindex = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={siteConfig.language} data-theme="system">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <Seo
+      title={title}
+      description={description}
+      canonical={canonical}
+      type={seoType}
+      published={published}
+      updated={updated}
+      tags={tags}
+      noindex={noindex}
+    />
+    <script is:inline>
+      (() => {
+        const storageKey = "theme-preference";
+        const allowedThemes = ["system", "light", "dark"];
+        let theme = "system";
+
+        try {
+          const storedTheme = window.localStorage.getItem(storageKey);
+          if (storedTheme && allowedThemes.includes(storedTheme)) {
+            theme = storedTheme;
+          }
+        } catch {
+          // Storage can be unavailable in privacy-focused browsing modes.
+        }
+
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme === "system" ? "light dark" : theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header />
+    <main
+      id="main-content"
+      class:list={["site-main", "site-shell", { "site-main--wide": wide }]}
+      tabindex="-1"
+    >
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

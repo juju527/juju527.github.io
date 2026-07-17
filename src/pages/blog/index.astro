@@ -1,0 +1,73 @@
+---
+import PostCard from "../../components/PostCard.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getVisiblePosts } from "../../lib/posts";
+
+const posts = await getVisiblePosts();
+---
+
+<BaseLayout title="Blog" description="Technical articles, project notes, and learning records.">
+  <PageHeader
+    eyebrow="Blog"
+    title="Notes and articles"
+    description="Technical writing about algorithms, systems, and software engineering."
+  />
+
+  <nav class="browse-nav" aria-label="Browse articles">
+    <ul>
+      <li><a href="/archive/">Archive</a></li>
+      <li><a href="/tags/">Tags</a></li>
+    </ul>
+  </nav>
+
+  {
+    posts.length > 0 ? (
+      <div class="post-list">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="empty-state">No published articles yet.</p>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .browse-nav {
+    margin-top: calc(-1 * var(--space-5));
+    margin-bottom: var(--space-7);
+  }
+
+  .browse-nav ul {
+    display: flex;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .browse-nav a {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .browse-nav a:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+    background: var(--color-surface-muted);
+  }
+
+  .empty-state {
+    color: var(--color-text-muted);
+  }
+
+  .post-list {
+    display: grid;
+  }
+</style>

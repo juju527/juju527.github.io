@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tianyi Zhu placeholder favicon">
+  <style>
+    .background { fill: #f8f8f6; }
+    .mark { fill: #315f50; }
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #151815; }
+      .mark { fill: #8fc9b3; }
+    }
+  </style>
+  <rect class="background" width="64" height="64" rx="12" />
+  <path class="mark" d="M14 16h36v8H36v25h-8V24H14z" />
+</svg>
+

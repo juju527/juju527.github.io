@@ -1,0 +1,49 @@
+---
+import { siteConfig } from "../config/site";
+
+interface Props {
+  title?: string;
+  description: string;
+  canonical?: string | URL | false;
+  type?: "website" | "article";
+  published?: Date;
+  updated?: Date;
+  tags?: readonly string[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  type = "website",
+  published,
+  updated,
+  tags = [],
+  noindex = false,
+} = Astro.props;
+const pageTitle = title && title !== siteConfig.name ? `${title} | ${siteConfig.name}` : siteConfig.name;
+const siteURL = Astro.site ?? new URL(siteConfig.url);
+const canonicalURL =
+  canonical === false
+    ? undefined
+    : new URL(canonical instanceof URL ? canonical.href : (canonical ?? Astro.url.pathname), siteURL);
+const feedURL = new URL(siteConfig.feed.href, siteURL);
+const sitemapURL = new URL(siteConfig.sitemap, siteURL);
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+{canonicalURL && <link rel="canonical" href={canonicalURL} />}
+<link rel="alternate" type="application/rss+xml" title={siteConfig.feed.title} href={feedURL} />
+<link rel="sitemap" href={sitemapURL} />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+{canonicalURL && <meta property="og:url" content={canonicalURL} />}
+{type === "article" && published && <meta property="article:published_time" content={published.toISOString()} />}
+{type === "article" && updated && <meta property="article:modified_time" content={updated.toISOString()} />}
+{type === "article" && tags.map((tag) => <meta property="article:tag" content={tag} />)}

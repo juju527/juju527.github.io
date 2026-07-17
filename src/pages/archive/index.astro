@@ -1,0 +1,140 @@
+---
+import PageHeader from "../../components/PageHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { groupPostsByArchive } from "../../lib/archive";
+import { formatPostDate, getPostHref, getVisiblePosts } from "../../lib/posts";
+
+const posts = await getVisiblePosts({ includeDrafts: false });
+const archive = groupPostsByArchive(posts);
+---
+
+<BaseLayout title="Archive" description="Public articles organized by year and month.">
+  <PageHeader
+    eyebrow="Archive"
+    title="Writing over time"
+    description="Published articles organized by year and month."
+  />
+
+  {
+    archive.length > 0 ? (
+      <div class="archive">
+        {archive.map((year) => (
+          <section class="archive-year" aria-labelledby={`year-${year.year}`}>
+            <header>
+              <h2 id={`year-${year.year}`}>{year.year}</h2>
+              <p>
+                {year.count} {year.count === 1 ? "article" : "articles"}
+              </p>
+            </header>
+            <div class="archive-year__months">
+              {year.months.map((month) => (
+                <section class="archive-month" aria-labelledby={`month-${year.year}-${month.month + 1}`}>
+                  <h3 id={`month-${year.year}-${month.month + 1}`}>{month.label}</h3>
+                  <ul>
+                    {month.posts.map((post) => (
+                      <li>
+                        <time datetime={post.data.published.toISOString()}>
+                          {formatPostDate(post.data.published)}
+                        </time>
+                        <a href={getPostHref(post)}>{post.data.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    ) : (
+      <p class="empty-state">The archive is empty because no public articles have been published yet.</p>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .archive {
+    display: grid;
+    gap: var(--space-9);
+  }
+
+  .archive-year > header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: var(--border-width) solid var(--color-border-strong);
+  }
+
+  .archive-year > header h2,
+  .archive-year > header p {
+    margin: 0;
+  }
+
+  .archive-year > header h2 {
+    font-size: var(--font-size-2xl);
+    letter-spacing: -0.035em;
+  }
+
+  .archive-year > header p,
+  .empty-state {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .archive-year__months {
+    display: grid;
+    gap: var(--space-7);
+    padding-top: var(--space-6);
+  }
+
+  .archive-month h3 {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .archive-month ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .archive-month li {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    gap: var(--space-4);
+    padding-block: var(--space-3);
+    border-top: var(--border-width) solid var(--color-border);
+  }
+
+  .archive-month li:last-child {
+    border-bottom: var(--border-width) solid var(--color-border);
+  }
+
+  .archive-month time {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .archive-month a {
+    color: var(--color-text);
+    font-weight: 700;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .archive-month a:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 36rem) {
+    .archive-month li {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

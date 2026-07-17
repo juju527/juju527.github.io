@@ -1,0 +1,122 @@
+---
+import { siteConfig } from "../config/site";
+import ThemeSelector from "./ThemeSelector.astro";
+
+const currentPath = Astro.url.pathname;
+const isCurrentPage = (href: string) => currentPath === href || currentPath.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="site-header__inner site-shell">
+    <a class="site-brand" href="/" aria-label={`${siteConfig.name} home`}>{siteConfig.name}</a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <ul>
+        {
+          siteConfig.navigation.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrentPage(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <ThemeSelector />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: var(--border-width) solid var(--color-border);
+    background: var(--color-background);
+  }
+
+  .site-header__inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "brand nav theme";
+    align-items: center;
+    min-height: var(--header-height);
+    gap: var(--space-5);
+  }
+
+  .site-brand {
+    grid-area: brand;
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .site-brand:hover {
+    color: var(--color-accent);
+  }
+
+  .site-nav {
+    grid-area: nav;
+    justify-self: end;
+  }
+
+  .site-nav ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-nav a {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+
+  .site-nav a:hover,
+  .site-nav a[aria-current="page"] {
+    color: var(--color-text);
+    background: var(--color-surface-muted);
+  }
+
+  @media (max-width: 44rem) {
+    .site-header__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "brand brand"
+        "nav theme";
+      gap: var(--space-2) var(--space-3);
+      padding-block: var(--space-4);
+    }
+
+    .site-nav {
+      justify-self: start;
+      min-width: 0;
+    }
+
+    .site-nav ul {
+      flex-wrap: wrap;
+    }
+
+    .site-nav a {
+      padding-inline: var(--space-2);
+    }
+  }
+
+  @media (max-width: 25rem) {
+    .site-header__inner {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "brand"
+        "nav"
+        "theme";
+    }
+  }
+</style>
+

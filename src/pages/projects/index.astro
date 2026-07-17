@@ -1,0 +1,51 @@
+---
+import PageHeader from "../../components/PageHeader.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { projects } from "../../data/projects";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Projects"
+  description="Personal software projects with verified source and website links."
+  wide
+>
+  <PageHeader
+    eyebrow="Projects"
+    title="Software projects"
+    description="Projects whose details and links can be verified from this repository."
+  />
+
+  {
+    projects.length > 0 ? (
+      <div class="project-grid">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    ) : (
+      <div class="empty-state">
+        <p>No verified project entries have been added yet.</p>
+        <p>Future placeholders must be clearly labeled before they are published here.</p>
+      </div>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+    gap: var(--space-5);
+  }
+
+  .empty-state {
+    padding: var(--space-6);
+    border: var(--border-width) dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+  }
+
+  .empty-state p:last-child {
+    margin-bottom: 0;
+  }
+</style>

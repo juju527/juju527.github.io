@@ -1,0 +1,88 @@
+---
+import PageHeader from "../../components/PageHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getVisiblePosts } from "../../lib/posts";
+import { getTagHref, getTagSummaries } from "../../lib/tags";
+
+const posts = await getVisiblePosts({ includeDrafts: false });
+const tags = getTagSummaries(posts);
+---
+
+<BaseLayout title="Tags" description="Browse public articles by topic.">
+  <PageHeader
+    eyebrow="Tags"
+    title="Browse by topic"
+    description="All tags from published articles, with the number of articles in each topic."
+  />
+
+  {
+    tags.length > 0 ? (
+      <ul class="tag-list">
+        {tags.map((tag) => (
+          <li>
+            <a href={getTagHref(tag.slug)}>
+              <span>{tag.name}</span>
+              <span>
+                {tag.count} {tag.count === 1 ? "article" : "articles"}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="empty-state">No tags are available because no public articles have been published yet.</p>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .tag-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tag-list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 4rem;
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    background: var(--color-surface);
+    text-decoration: none;
+  }
+
+  .tag-list a:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-accent-hover);
+    background: var(--color-surface-muted);
+  }
+
+  .tag-list a span:first-child {
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .tag-list a span:last-child {
+    flex: none;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .empty-state {
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 36rem) {
+    .tag-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

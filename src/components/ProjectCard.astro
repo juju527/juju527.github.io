@@ -1,0 +1,108 @@
+---
+import {
+  projectStatusLabels,
+  type Project,
+} from "../data/projects";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="project-card">
+  <header>
+    <div class="project-card__labels">
+      <span>{projectStatusLabels[project.status]}</span>
+      {project.featured && <span>Featured</span>}
+    </div>
+    <h2>{project.name}</h2>
+  </header>
+  <p class="project-card__description">{project.description}</p>
+  <ul class="project-card__technologies" aria-label={`Technologies used by ${project.name}`}>
+    {project.technologies.map((technology) => <li>{technology}</li>)}
+  </ul>
+  <ul class="project-card__links" aria-label={`Links for ${project.name}`}>
+    <li>
+      <a href={project.repository}>Repository <span aria-hidden="true">↗</span></a>
+    </li>
+    {
+      project.website && (
+        <li>
+          <a href={project.website}>Website <span aria-hidden="true">↗</span></a>
+        </li>
+      )
+    }
+  </ul>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: var(--space-6);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .project-card__labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .project-card__labels span {
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+  }
+
+  .project-card h2 {
+    font-size: var(--font-size-xl);
+    overflow-wrap: anywhere;
+  }
+
+  .project-card__description {
+    color: var(--color-text-muted);
+  }
+
+  .project-card__technologies,
+  .project-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-card__technologies {
+    margin-bottom: var(--space-6);
+  }
+
+  .project-card__technologies li {
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+  }
+
+  .project-card__links {
+    margin-top: auto;
+    gap: var(--space-4);
+  }
+
+  .project-card__links a {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
+</style>

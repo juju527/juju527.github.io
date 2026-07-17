@@ -1,0 +1,67 @@
+<div class="theme-selector">
+  <label for="theme-select">Theme</label>
+  <select id="theme-select" data-theme-select>
+    <option value="system">System</option>
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</div>
+
+<script is:inline>
+  (() => {
+    const storageKey = "theme-preference";
+    const select = document.querySelector("[data-theme-select]");
+    const root = document.documentElement;
+    const allowedThemes = ["system", "light", "dark"];
+
+    if (!(select instanceof HTMLSelectElement)) return;
+
+    const currentTheme = allowedThemes.includes(root.dataset.theme ?? "")
+      ? root.dataset.theme
+      : "system";
+    select.value = currentTheme;
+
+    select.addEventListener("change", () => {
+      const theme = allowedThemes.includes(select.value) ? select.value : "system";
+      root.dataset.theme = theme;
+      root.style.colorScheme = theme === "system" ? "light dark" : theme;
+
+      try {
+        if (theme === "system") {
+          window.localStorage.removeItem(storageKey);
+        } else {
+          window.localStorage.setItem(storageKey, theme);
+        }
+      } catch {
+        // The selected theme still applies for the current page.
+      }
+    });
+  })();
+</script>
+
+<style>
+  .theme-selector {
+    grid-area: theme;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .theme-selector label {
+    font-weight: 600;
+  }
+
+  .theme-selector select {
+    min-height: 2.25rem;
+    padding: var(--space-1) var(--space-7) var(--space-1) var(--space-2);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    font: inherit;
+    cursor: pointer;
+  }
+</style>
+

@@ -1,0 +1,67 @@
+---
+import { siteConfig } from "../config/site";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner site-shell">
+    <p>&copy; {currentYear} {siteConfig.name}</p>
+    <ul aria-label="Social links">
+      {
+        siteConfig.socialLinks.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: var(--border-width) solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: var(--footer-height);
+    padding-block: var(--space-5);
+  }
+
+  .site-footer p,
+  .site-footer ul {
+    margin: 0;
+  }
+
+  .site-footer ul {
+    display: flex;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+
+  .site-footer a:hover {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 32rem) {
+    .site-footer__inner {
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+</style>
+
