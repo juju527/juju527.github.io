@@ -15,7 +15,7 @@ export interface ProfileData {
   todos: readonly ProfileTodo[];
 }
 
-export const profileData = {
+export const profileData: ProfileData = {
   introduction: [
     "An OIer from Yali Middle School",
     "An ACMer from Shanghai Jiao Tong University",
@@ -25,4 +25,4 @@ export const profileData = {
   technicalInterests: [],
   currentLearning: [],
   todos: [],
-} satisfies ProfileData;
+};
