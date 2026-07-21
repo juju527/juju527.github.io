@@ -1,7 +1,6 @@
 ---
 import PostCard from "../components/PostCard.astro";
 import { siteConfig } from "../config/site";
-import { profileData } from "../data/profile";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getVisiblePosts } from "../lib/posts";
 
@@ -12,13 +11,11 @@ const homepageLinks = [
   ...siteConfig.navigation.map((link) => ({ ...link, external: false })),
   ...siteConfig.socialLinks.map((link) => ({ ...link, external: true })),
 ];
-const focusAreas = profileData.technicalInterests;
 ---
 
 <BaseLayout description={siteConfig.description} wide>
   <div class="home">
     <section class="hero" aria-labelledby="hero-title">
-      <p class="hero__eyebrow">Personal website &amp; technical blog</p>
       <h1 id="hero-title">{siteConfig.name}</h1>
       <p class="hero__summary">{siteConfig.description}</p>
       <nav aria-label="Homepage shortcuts">
@@ -76,32 +73,14 @@ const focusAreas = profileData.technicalInterests;
             <p class="featured-placeholder__label">Content placeholder</p>
             <h3>Featured work will appear here</h3>
             <p>
-              No articles or projects are marked as featured yet. This space is intentionally kept
-              as a placeholder until real work is ready to publish.
+              No articles are marked as featured yet. This space is intentionally kept as a
+              placeholder until new work is ready to publish.
             </p>
           </div>
         )
       }
     </section>
 
-    <section class="home-section" aria-labelledby="focus-title">
-      <header class="section-heading">
-        <div>
-          <p>Technical direction</p>
-          <h2 id="focus-title">Areas of focus</h2>
-        </div>
-      </header>
-      <ul class="focus-grid">
-        {
-          focusAreas.map((area) => (
-            <li>
-              <h3>{area.title}</h3>
-              <p>{area.description}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
   </div>
 </BaseLayout>
 
@@ -116,7 +95,6 @@ const focusAreas = profileData.technicalInterests;
     border-bottom: var(--border-width) solid var(--color-border);
   }
 
-  .hero__eyebrow,
   .section-heading > div > p {
     margin-bottom: var(--space-3);
     color: var(--color-accent);
@@ -247,32 +225,6 @@ const focusAreas = profileData.technicalInterests;
     font-size: var(--font-size-xl);
   }
 
-  .focus-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .focus-grid li {
-    padding: var(--space-5);
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-  }
-
-  .focus-grid h3 {
-    margin-bottom: var(--space-2);
-    font-size: var(--font-size-lg);
-  }
-
-  .focus-grid p {
-    margin-bottom: 0;
-    color: var(--color-text-muted);
-  }
-
   @media (max-width: 40rem) {
     .home {
       gap: var(--space-8);
@@ -304,8 +256,5 @@ const focusAreas = profileData.technicalInterests;
       font-size: var(--font-size-xl);
     }
 
-    .focus-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

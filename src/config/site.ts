@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Tianyi Zhu",
   description:
-    "Personal blog of juju527",
+    "Personal site of juju527",
   url: "https://juju527.github.io",
   language: "en",
   feed: {
@@ -11,7 +11,6 @@ export const siteConfig = {
   sitemap: "/sitemap-index.xml",
   navigation: [
     { label: "Blog", href: "/blog/" },
-    { label: "Projects", href: "/projects/" },
     { label: "About", href: "/about/" },
   ],
   socialLinks: [
